@@ -911,8 +911,10 @@ MonoBehaviour:
   - {fileID: 1120638585}
   - {fileID: 1927596988}
   - {fileID: 632267987}
-  cartLights: {fileID: 1628009118}
+  cartLights: {fileID: 738383410}
   objectAndScreen: {fileID: 740531795}
+  mainMenu: {fileID: 905901995}
+  levelMenu: {fileID: 0}
   transitionSpeed: 1
 --- !u!1001 &390940350
 Prefab:
@@ -1495,7 +1497,7 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.7
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -1543,7 +1545,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 740531795}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1909389818}
@@ -2068,7 +2070,7 @@ GameObject:
   - component: {fileID: 905901997}
   - component: {fileID: 905901996}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: Main Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3570,7 +3572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1628009119
 Transform:
   m_ObjectHideFlags: 0
