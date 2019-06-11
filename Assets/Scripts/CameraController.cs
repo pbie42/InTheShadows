@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
 	public GameObject levelMenu;
 	public GameObject mainMenu;
 	public GameObject objectAndScreen;
+	public LevelController levelController;
 	public LevelSelection levelSelector;
 	public Transform[] views;
 	public UnityEngine.Light cartLights;
@@ -49,7 +50,7 @@ public class CameraController : MonoBehaviour
 	{
 		levelSelector.canSelect = true;
 		StartCoroutine(HideMainMenu());
-		StartCoroutine(HideObjectAndScreen());
+		levelController.SetLevelActive(false);
 		StartCoroutine(fadeInAndOut(cartLights, true, _fadeSpeed));
 		if (_viewIndex == 2)
 			_currentView = views[2];
@@ -61,7 +62,7 @@ public class CameraController : MonoBehaviour
 	private void Location3()
 	{
 		levelSelector.canSelect = false;
-		objectAndScreen.SetActive(true);
+		levelController.SetLevelActive(true);
 		StartCoroutine(fadeInAndOut(cartLights, false, _fadeSpeed));
 		transform.rotation = views[2].rotation;
 		_currentView = views[3];

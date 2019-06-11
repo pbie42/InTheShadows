@@ -18,6 +18,7 @@ public class LevelSelection : MonoBehaviour
 	public CameraController camera;
 	public GameObject level1;
 	public GameObject level2;
+	public LevelController levelController;
 	public UnityEngine.Light level1SpotLight;
 	public UnityEngine.Light level1TopLight;
 	public UnityEngine.Light level2SpotLight;
@@ -64,7 +65,7 @@ public class LevelSelection : MonoBehaviour
 	private void SelectLevel(string level)
 	{
 		clueText.text = clues[level];
-		camera.objectAndScreen = levels[level];
+		levelController.currentLevel = levels[level];
 		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
 		StopRoutines();
 		TurnOffOthers(level);
