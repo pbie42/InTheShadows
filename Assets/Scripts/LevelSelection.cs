@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelSelection : MonoBehaviour
 {
 	private Dictionary<string, string> clues = new Dictionary<string, string>();
+	private Dictionary<string, GameObject> levels = new Dictionary<string, GameObject>();
 	private Dictionary<string, UnityEngine.Light> spotLights = new Dictionary<string, UnityEngine.Light>();
 	private Dictionary<string, UnityEngine.Light> topLights = new Dictionary<string, UnityEngine.Light>();
 	private float _fadeInSpeed = 2f;
@@ -14,6 +15,9 @@ public class LevelSelection : MonoBehaviour
 	private IEnumerator _spotCoroutine;
 	private IEnumerator _topCoroutine;
 	public bool canSelect = false;
+	public CameraController camera;
+	public GameObject level1;
+	public GameObject level2;
 	public UnityEngine.Light level1SpotLight;
 	public UnityEngine.Light level1TopLight;
 	public UnityEngine.Light level2SpotLight;
@@ -60,6 +64,7 @@ public class LevelSelection : MonoBehaviour
 	private void SelectLevel(string level)
 	{
 		clueText.text = clues[level];
+		camera.objectAndScreen = levels[level];
 		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
 		StopRoutines();
 		TurnOffOthers(level);
@@ -149,6 +154,8 @@ public class LevelSelection : MonoBehaviour
 
 	private void SetupLevelSelection()
 	{
+		levels.Add("Level 1", level1);
+		levels.Add("Level 2", level2);
 		spotLights.Add("Level 1", level1SpotLight);
 		spotLights.Add("Level 2", level2SpotLight);
 		spotLights.Add("Level 3", level3SpotLight);
