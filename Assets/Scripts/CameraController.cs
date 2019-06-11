@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
 	public GameObject mainMenu;
 	public GameObject levelMenu;
 	public float transitionSpeed;
-	private float _fadeSpeed = 2f;
+	private float _fadeSpeed = 3f;
 	private Transform _currentView;
 	private int _viewIndex = 0;
 
@@ -62,7 +62,7 @@ public class CameraController : MonoBehaviour
 	IEnumerator fadeInAndOut(Light lightToFade, bool fadeIn, float duration)
 	{
 		float minLuminosity = 0; // min intensity
-		float maxLuminosity = 1.7f; // max intensity
+		float maxLuminosity = 2.22f; // max intensity
 
 		float counter = 0f;
 
