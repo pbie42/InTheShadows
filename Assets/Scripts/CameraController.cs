@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+	private float _fadeSpeed = 3f;
+	private int _viewIndex = 0;
+	private Transform _currentView;
+	public float transitionSpeed;
+	public GameObject levelMenu;
+	public GameObject mainMenu;
+	public GameObject objectAndScreen;
+	public LevelSelection levelSelector;
 	public Transform[] views;
 	public UnityEngine.Light cartLights;
-	public GameObject objectAndScreen;
-	public GameObject mainMenu;
-	public GameObject levelMenu;
-	public float transitionSpeed;
-	private float _fadeSpeed = 3f;
-	private Transform _currentView;
-	private int _viewIndex = 0;
 
 	// Use this for initialization
 	void Start()
@@ -22,41 +23,56 @@ public class CameraController : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Alpha1))
-		{
-			if (_viewIndex != 0)
-				StartCoroutine(fadeInAndOut(cartLights, false, _fadeSpeed));
-			if (_viewIndex == 1)
-				transform.rotation = views[1].rotation;
-			mainMenu.SetActive(true);
-			_currentView = views[0];
-			_viewIndex = 0;
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha2))
-		{
-			StartCoroutine(HideMainMenu());
-			StartCoroutine(HideObjectAndScreen());
-			StartCoroutine(fadeInAndOut(cartLights, true, _fadeSpeed));
-			if (_viewIndex == 2)
-				_currentView = views[2];
-			else
-				_currentView = views[1];
-			_viewIndex = 1;
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha3))
-		{
-			objectAndScreen.SetActive(true);
+		if (_viewIndex != 0 && Input.GetKeyDown(KeyCode.Alpha1))
+			Location1();
+		if (_viewIndex != 1 && Input.GetKeyDown(KeyCode.Alpha2))
+			Location2();
+		if (_viewIndex != 2 && Input.GetKeyDown(KeyCode.Alpha3))
+			Location3();
+		if (_viewIndex != 3 && Input.GetKeyDown(KeyCode.Alpha4))
+			Location4();
+	}
+
+	private void Location1()
+	{
+		levelSelector.canSelect = false;
+		if (_viewIndex != 0)
 			StartCoroutine(fadeInAndOut(cartLights, false, _fadeSpeed));
-			transform.rotation = views[2].rotation;
-			_currentView = views[3];
-			_viewIndex = 2;
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha4))
-		{
-			// cartLights.SetActive(false);
-			_currentView = views[4];
-			_viewIndex = 3;
-		}
+		if (_viewIndex == 1)
+			transform.rotation = views[1].rotation;
+		mainMenu.SetActive(true);
+		_currentView = views[0];
+		_viewIndex = 0;
+	}
+
+	private void Location2()
+	{
+		levelSelector.canSelect = true;
+		StartCoroutine(HideMainMenu());
+		StartCoroutine(HideObjectAndScreen());
+		StartCoroutine(fadeInAndOut(cartLights, true, _fadeSpeed));
+		if (_viewIndex == 2)
+			_currentView = views[2];
+		else
+			_currentView = views[1];
+		_viewIndex = 1;
+	}
+
+	private void Location3()
+	{
+		levelSelector.canSelect = false;
+		objectAndScreen.SetActive(true);
+		StartCoroutine(fadeInAndOut(cartLights, false, _fadeSpeed));
+		transform.rotation = views[2].rotation;
+		_currentView = views[3];
+		_viewIndex = 2;
+	}
+
+	private void Location4()
+	{
+		levelSelector.canSelect = false;
+		_currentView = views[4];
+		_viewIndex = 3;
 	}
 
 	IEnumerator fadeInAndOut(Light lightToFade, bool fadeIn, float duration)

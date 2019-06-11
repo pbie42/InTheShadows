@@ -4,29 +4,36 @@ using UnityEngine;
 
 public class LevelSelection : MonoBehaviour
 {
-	public UnityEngine.Light level1TopLight;
-	public UnityEngine.Light level1SpotLight;
-	public UnityEngine.Light level2TopLight;
-	public UnityEngine.Light level2SpotLight;
-	public UnityEngine.Light level3TopLight;
-	public UnityEngine.Light level3SpotLight;
-	public UnityEngine.Light level4TopLight;
-	public UnityEngine.Light level4SpotLight;
-	private float _topLightIntensity = 87.86f;
-	private float _spotLightIntensity = 22.83f;
+	private Dictionary<string, string> clues = new Dictionary<string, string>();
+	private Dictionary<string, UnityEngine.Light> spotLights = new Dictionary<string, UnityEngine.Light>();
+	private Dictionary<string, UnityEngine.Light> topLights = new Dictionary<string, UnityEngine.Light>();
 	private float _fadeInSpeed = 2f;
 	private float _fadeOutSpeed = 0.5f;
+	private float _spotLightIntensity = 22.83f;
+	private float _topLightIntensity = 87.86f;
+	private IEnumerator _spotCoroutine;
+	private IEnumerator _topCoroutine;
+	public bool canSelect = false;
+	public UnityEngine.Light level1SpotLight;
+	public UnityEngine.Light level1TopLight;
+	public UnityEngine.Light level2SpotLight;
+	public UnityEngine.Light level2TopLight;
+	public UnityEngine.Light level3SpotLight;
+	public UnityEngine.Light level3TopLight;
+	public UnityEngine.Light level4SpotLight;
+	public UnityEngine.Light level4TopLight;
+	public UnityEngine.UI.Text clueText;
 
 	// Use this for initialization
 	void Start()
 	{
-
+		SetupLevelSelection();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetMouseButton(0))
+		if (canSelect && Input.GetMouseButtonDown(0))
 			LocatePosition();
 	}
 
@@ -36,50 +43,48 @@ public class LevelSelection : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 1000))
 		{
-			Debug.Log("hit.gameObject: " + hit.collider.gameObject.name);
+			// Debug.Log("hit.gameObject: " + hit.collider.gameObject.name);
 			string name = hit.collider.gameObject.name;
-			Debug.Log("name: " + name);
+			// Debug.Log("name: " + name);
 			if (name == "Level 1")
-			{
-				fadeLights(level1TopLight, level1SpotLight, true);
-				TurnOffOthers(1);
-			}
-			if (name == "Level 2")
-			{
-				fadeLights(level2TopLight, level2SpotLight, true);
-				TurnOffOthers(2);
-			}
-			if (name == "Level 3")
-			{
-				fadeLights(level3TopLight, level3SpotLight, true);
-				TurnOffOthers(3);
-			}
-			if (name == "Level 4")
-			{
-				fadeLights(level4TopLight, level4SpotLight, true);
-				TurnOffOthers(4);
-			}
+				SelectLevel("Level 1");
+			else if (name == "Level 2")
+				SelectLevel("Level 2");
+			else if (name == "Level 3")
+				SelectLevel("Level 3");
+			else if (name == "Level 4")
+				SelectLevel("Level 4");
 		}
 	}
 
-	private void TurnOffOthers(int level)
+	private void SelectLevel(string level)
 	{
-		if (level != 1)
+		clueText.text = clues[level];
+		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
+		StopRoutines();
+		TurnOffOthers(level);
+		fadeLights(topLights[level], spotLights[level], true);
+	}
+
+	private void TurnOffOthers(string level)
+	{
+		Debug.Log("level: " + level);
+		if (level != "Level 1")
 		{
 			level1TopLight.intensity = 0;
 			level1SpotLight.intensity = 0;
 		}
-		if (level != 2)
+		if (level != "Level 2")
 		{
 			level2TopLight.intensity = 0;
 			level2SpotLight.intensity = 0;
 		}
-		if (level != 3)
+		if (level != "Level")
 		{
 			level3TopLight.intensity = 0;
 			level3SpotLight.intensity = 0;
 		}
-		if (level != 4)
+		if (level != "Level 4")
 		{
 			level4TopLight.intensity = 0;
 			level4SpotLight.intensity = 0;
@@ -89,11 +94,21 @@ public class LevelSelection : MonoBehaviour
 	private void fadeLights(Light topLight, Light spotLight, bool fadeIn)
 	{
 		float fadeSpeed = fadeIn ? _fadeInSpeed : _fadeOutSpeed;
-		StartCoroutine(fadeInAndOut(topLight, fadeIn, fadeSpeed, _topLightIntensity));
-		StartCoroutine(fadeInAndOut(spotLight, fadeIn, fadeSpeed, _spotLightIntensity));
+		_topCoroutine = fadeInAndOut(topLight, fadeIn, fadeSpeed, _topLightIntensity);
+		_spotCoroutine = fadeInAndOut(spotLight, fadeIn, fadeSpeed, _spotLightIntensity);
+		StartCoroutine(_topCoroutine);
+		StartCoroutine(_spotCoroutine);
 	}
 
-	IEnumerator fadeInAndOut(Light lightToFade, bool fadeIn, float duration, float maxIntensity)
+	private void StopRoutines()
+	{
+		if (_topCoroutine != null)
+			StopCoroutine(_topCoroutine);
+		if (_spotCoroutine != null)
+			StopCoroutine(_spotCoroutine);
+	}
+
+	private IEnumerator fadeInAndOut(Light lightToFade, bool fadeIn, float duration, float maxIntensity)
 	{
 		float minLuminosity = 0; // min intensity
 		float maxLuminosity = maxIntensity; // max intensity
@@ -120,6 +135,34 @@ public class LevelSelection : MonoBehaviour
 			lightToFade.intensity = Mathf.Lerp(a, b, counter / duration);
 			yield return null;
 		}
+	}
+
+	private IEnumerator FadeTextToFullAlpha(float t, UnityEngine.UI.Text i)
+	{
+		i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
+		while (i.color.a < 1.0f)
+		{
+			i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / t));
+			yield return null;
+		}
+	}
+
+	private void SetupLevelSelection()
+	{
+		spotLights.Add("Level 1", level1SpotLight);
+		spotLights.Add("Level 2", level2SpotLight);
+		spotLights.Add("Level 3", level3SpotLight);
+		spotLights.Add("Level 4", level4SpotLight);
+		topLights.Add("Level 1", level1TopLight);
+		topLights.Add("Level 2", level2TopLight);
+		topLights.Add("Level 3", level3TopLight);
+		topLights.Add("Level 4", level4TopLight);
+		clues.Add("Level 1", "Ain't nobody dope as me I'm just so short and stout");
+		clues.Add("Level 2", "Always Remembers, \nNever Forgets");
+		clues.Add("Level 3", "Test 3");
+		clues.Add("Level 4", "The answer to life, the universe, and everything");
+		clueText.text = "Pick your poison, Partner";
+		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
 	}
 }
 
