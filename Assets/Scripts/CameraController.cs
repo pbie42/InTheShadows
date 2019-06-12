@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
 	private float _fadeSpeed = 3f;
 	private int _viewIndex = 0;
+	[HideInInspector] public int currentView = 0;
 	private Transform _currentView;
 	public float transitionSpeed;
 	public GameObject levelMenu;
@@ -24,9 +25,9 @@ public class CameraController : MonoBehaviour
 
 	void Update()
 	{
-		if (_viewIndex != 0 && Input.GetKeyDown(KeyCode.Alpha1))
+		if (_viewIndex != 0 && (Input.GetKeyDown(KeyCode.Alpha1) || currentView == 0))
 			Location1();
-		if (_viewIndex != 1 && Input.GetKeyDown(KeyCode.Alpha2))
+		if (_viewIndex != 1 && (Input.GetKeyDown(KeyCode.Alpha2) || currentView == 1))
 			Location2();
 		if (_viewIndex != 2 && Input.GetKeyDown(KeyCode.Alpha3))
 			Location3();

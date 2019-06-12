@@ -32,6 +32,8 @@ public class LevelSelection : MonoBehaviour
 	public UnityEngine.Light level4SpotLight;
 	public UnityEngine.Light level4TopLight;
 	public UnityEngine.UI.Text clueText;
+	public UnityEngine.UI.Text normalText;
+	public UnityEngine.UI.Text testText;
 
 	// Use this for initialization
 	void Start()
@@ -175,6 +177,32 @@ public class LevelSelection : MonoBehaviour
 		clues.Add("Level 4", "The answer to life, the universe, and everything");
 		clueText.text = "Howdy, Partner !\nPick your poison";
 		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
+		StartCoroutine(ButtonFadeIns());
+	}
+
+	IEnumerator ButtonFadeIns()
+	{
+		yield return new WaitForSeconds(2);
+		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, normalText));
+		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, testText));
+	}
+
+	public void NormalGame()
+	{
+		unlockedLevel1 = true;
+		unlockedLevel2 = false;
+		unlockedLevel3 = false;
+		unlockedLevel4 = false;
+		camera.currentView = 1;
+	}
+
+	public void TestGame()
+	{
+		unlockedLevel1 = true;
+		unlockedLevel2 = true;
+		unlockedLevel3 = true;
+		unlockedLevel4 = true;
+		camera.currentView = 1;
 	}
 }
 
