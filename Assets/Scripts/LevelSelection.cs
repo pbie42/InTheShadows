@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class LevelSelection : MonoBehaviour
 {
+	[HideInInspector] public bool unlockedLevel1 = true;
+	[HideInInspector] public bool unlockedLevel2 = false;
+	[HideInInspector] public bool unlockedLevel3 = false;
+	[HideInInspector] public bool unlockedLevel4 = false;
 	private Dictionary<string, string> clues = new Dictionary<string, string>();
 	private Dictionary<string, GameObject> levels = new Dictionary<string, GameObject>();
 	private Dictionary<string, UnityEngine.Light> spotLights = new Dictionary<string, UnityEngine.Light>();
@@ -51,13 +55,13 @@ public class LevelSelection : MonoBehaviour
 			// Debug.Log("hit.gameObject: " + hit.collider.gameObject.name);
 			string name = hit.collider.gameObject.name;
 			// Debug.Log("name: " + name);
-			if (name == "Level 1")
+			if (name == "Level 1" && unlockedLevel1)
 				SelectLevel("Level 1");
-			else if (name == "Level 2")
+			else if (name == "Level 2" && unlockedLevel2)
 				SelectLevel("Level 2");
-			else if (name == "Level 3")
+			else if (name == "Level 3" && unlockedLevel3)
 				SelectLevel("Level 3");
-			else if (name == "Level 4")
+			else if (name == "Level 4" && unlockedLevel4)
 				SelectLevel("Level 4");
 		}
 	}
@@ -169,7 +173,7 @@ public class LevelSelection : MonoBehaviour
 		clues.Add("Level 2", "Always Remembers, \nNever Forgets");
 		clues.Add("Level 3", "Test 3");
 		clues.Add("Level 4", "The answer to life, the universe, and everything");
-		clueText.text = "Pick your poison, Partner";
+		clueText.text = "Howdy, Partner !\nPick your poison";
 		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
 	}
 }
