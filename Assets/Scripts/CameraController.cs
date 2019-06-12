@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
 			Location1();
 		if (_viewIndex != 1 && (Input.GetKeyDown(KeyCode.Alpha2) || currentView == 1))
 			Location2();
-		if (_viewIndex != 2 && Input.GetKeyDown(KeyCode.Alpha3))
+		if (_viewIndex != 2 && (Input.GetKeyDown(KeyCode.Alpha3) || currentView == 2))
 			Location3();
 		if (_viewIndex != 3 && Input.GetKeyDown(KeyCode.Alpha4))
 			Location4();

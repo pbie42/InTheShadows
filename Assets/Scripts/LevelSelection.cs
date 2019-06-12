@@ -18,10 +18,13 @@ public class LevelSelection : MonoBehaviour
 	private float _topLightIntensity = 87.86f;
 	private IEnumerator _spotCoroutine;
 	private IEnumerator _topCoroutine;
+	private string _howdyText = "Howdy, Partner !\nPick your poison";
 	public bool canSelect = false;
 	public CameraController camera;
 	public GameObject level1;
 	public GameObject level2;
+	public GameObject giddyUpButton;
+	public GameObject adiosButton;
 	public LevelController levelController;
 	public UnityEngine.Light level1SpotLight;
 	public UnityEngine.Light level1TopLight;
@@ -32,6 +35,8 @@ public class LevelSelection : MonoBehaviour
 	public UnityEngine.Light level4SpotLight;
 	public UnityEngine.Light level4TopLight;
 	public UnityEngine.UI.Text clueText;
+	public UnityEngine.UI.Text giddyupText;
+	public UnityEngine.UI.Text adiosText;
 	public UnityEngine.UI.Text normalText;
 	public UnityEngine.UI.Text testText;
 
@@ -54,9 +59,7 @@ public class LevelSelection : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 1000))
 		{
-			// Debug.Log("hit.gameObject: " + hit.collider.gameObject.name);
 			string name = hit.collider.gameObject.name;
-			// Debug.Log("name: " + name);
 			if (name == "Level 1" && unlockedLevel1)
 				SelectLevel("Level 1");
 			else if (name == "Level 2" && unlockedLevel2)
@@ -72,6 +75,7 @@ public class LevelSelection : MonoBehaviour
 	{
 		clueText.text = clues[level];
 		levelController.currentLevel = levels[level];
+		StartCoroutine(FadeAndDisplayButton(giddyupText, giddyUpButton));
 		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
 		StopRoutines();
 		TurnOffOthers(level);
@@ -101,6 +105,14 @@ public class LevelSelection : MonoBehaviour
 			level4TopLight.intensity = 0;
 			level4SpotLight.intensity = 0;
 		}
+	}
+
+	private void TurnOffAll()
+	{
+		TurnOffOthers("Level 1");
+		TurnOffOthers("Level 2");
+		TurnOffOthers("Level 3");
+		TurnOffOthers("Level 4");
 	}
 
 	private void fadeLights(Light topLight, Light spotLight, bool fadeIn)
@@ -159,6 +171,16 @@ public class LevelSelection : MonoBehaviour
 		}
 	}
 
+	public IEnumerator FadeTextToZeroAlpha(float t, UnityEngine.UI.Text i)
+	{
+		i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
+		while (i.color.a > 0.0f)
+		{
+			i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
+			yield return null;
+		}
+	}
+
 	private void SetupLevelSelection()
 	{
 		levels.Add("Level 1", level1);
@@ -175,7 +197,7 @@ public class LevelSelection : MonoBehaviour
 		clues.Add("Level 2", "Always Remembers, \nNever Forgets");
 		clues.Add("Level 3", "Test 3");
 		clues.Add("Level 4", "The answer to life, the universe, and everything");
-		clueText.text = "Howdy, Partner !\nPick your poison";
+		clueText.text = _howdyText;
 		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
 		StartCoroutine(ButtonFadeIns());
 	}
@@ -189,10 +211,9 @@ public class LevelSelection : MonoBehaviour
 
 	public void NormalGame()
 	{
-		unlockedLevel1 = true;
-		unlockedLevel2 = false;
-		unlockedLevel3 = false;
-		unlockedLevel4 = false;
+		RelockLevels();
+		StartCoroutine(FadeTextToFullAlpha(1.5f, clueText));
+		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton));
 		camera.currentView = 1;
 	}
 
@@ -202,7 +223,49 @@ public class LevelSelection : MonoBehaviour
 		unlockedLevel2 = true;
 		unlockedLevel3 = true;
 		unlockedLevel4 = true;
+		StartCoroutine(FadeTextToFullAlpha(1.5f, clueText));
+		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton));
 		camera.currentView = 1;
+	}
+
+	public void GoToLevel()
+	{
+		camera.currentView = 2;
+		StartCoroutine(FadeAndHideButton(giddyupText, giddyUpButton));
+		StartCoroutine(FadeAndHideButton(adiosText, adiosButton));
+	}
+
+	private IEnumerator FadeAndHideButton(UnityEngine.UI.Text text, GameObject button)
+	{
+		StartCoroutine(FadeTextToZeroAlpha(1.5f, text));
+		yield return new WaitForSeconds(1.5f);
+		button.SetActive(false);
+	}
+
+	private IEnumerator FadeAndDisplayButton(UnityEngine.UI.Text text, GameObject button)
+	{
+		button.SetActive(true);
+		StartCoroutine(FadeTextToFullAlpha(1.5f, text));
+		yield return new WaitForSeconds(1.5f);
+	}
+
+	public void BackToStart()
+	{
+		RelockLevels();
+		StartCoroutine(FadeAndHideButton(giddyupText, giddyUpButton));
+		StartCoroutine(FadeAndHideButton(adiosText, adiosButton));
+		StartCoroutine(FadeTextToZeroAlpha(1.5f, clueText));
+		TurnOffAll();
+		clueText.text = _howdyText;
+		camera.currentView = 0;
+	}
+
+	private void RelockLevels()
+	{
+		unlockedLevel1 = true;
+		unlockedLevel2 = false;
+		unlockedLevel3 = false;
+		unlockedLevel4 = false;
 	}
 }
 
