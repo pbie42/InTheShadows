@@ -1076,6 +1076,7 @@ RectTransform:
   - {fileID: 336048485}
   - {fileID: 10766019}
   - {fileID: 1060663141}
+  - {fileID: 1083359636}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1105,7 +1106,6 @@ MonoBehaviour:
   level2: {fileID: 1507327080}
   giddyUpButton: {fileID: 1060663140}
   adiosButton: {fileID: 10766018}
-  woahButton: {fileID: 357327561}
   levelController: {fileID: 1969781884}
   level1SpotLight: {fileID: 86545441}
   level1TopLight: {fileID: 846400933}
@@ -1118,7 +1118,6 @@ MonoBehaviour:
   clueText: {fileID: 336048486}
   giddyupText: {fileID: 2084323755}
   adiosText: {fileID: 758228637}
-  woahText: {fileID: 1199011315}
   normalText: {fileID: 1095460449}
   testText: {fileID: 998207758}
 --- !u!1 &257457361
@@ -2072,6 +2071,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1628009119}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &584845726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 584845728}
+  - component: {fileID: 584845727}
+  m_Layer: 0
+  m_Name: Gui Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &584845727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 584845726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b6b395991054563a78127324015757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &584845728
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 584845726}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &618500081
 GameObject:
@@ -4390,6 +4429,80 @@ Transform:
   m_PrefabParentObject: {fileID: 4000012920175052, guid: 4b3eaa042a32a5d46a5b7a1a20aa15e3,
     type: 2}
   m_PrefabInternal: {fileID: 438518201}
+--- !u!1 &1083359635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1083359636}
+  - component: {fileID: 1083359638}
+  - component: {fileID: 1083359637}
+  m_Layer: 0
+  m_Name: Win Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1083359636
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1083359635}
+  m_LocalRotation: {x: 0, y: -0.23607497, z: 0, w: 0.9717348}
+  m_LocalPosition: {x: 0, y: 0, z: -6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 250748348}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -27.31, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -231, y: 710.7}
+  m_SizeDelta: {x: 1080.5, y: 202.6}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1083359637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1083359635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 0163207e0140d4f12ba98798ad1bde16, type: 3}
+    m_FontSize: 100
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 100
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: You Solved The Teapot!
+--- !u!222 &1083359638
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1083359635}
 --- !u!1 &1095460447
 GameObject:
   m_ObjectHideFlags: 0
@@ -5032,6 +5145,8 @@ MonoBehaviour:
   canVertical: 1
   canMove: 0
   colliderPoints: 0
+  levelSelection: {fileID: 0}
+  levelController: {fileID: 0}
 --- !u!54 &1294709576
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6556,6 +6671,8 @@ MonoBehaviour:
   canVertical: 0
   canMove: 0
   colliderPoints: 3
+  levelSelection: {fileID: 250748349}
+  levelController: {fileID: 1969781884}
 --- !u!54 &1891599352
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6753,6 +6870,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: {fileID: 740531795}
+  winText: {fileID: 1083359637}
+  woahText: {fileID: 1199011315}
+  woahButton: {fileID: 357327561}
+  guiController: {fileID: 584845727}
 --- !u!4 &1969781885
 Transform:
   m_ObjectHideFlags: 0

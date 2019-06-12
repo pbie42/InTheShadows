@@ -25,7 +25,6 @@ public class LevelSelection : MonoBehaviour
 	public GameObject level2;
 	public GameObject giddyUpButton;
 	public GameObject adiosButton;
-	public GameObject woahButton;
 	public LevelController levelController;
 	public UnityEngine.Light level1SpotLight;
 	public UnityEngine.Light level1TopLight;
@@ -38,7 +37,6 @@ public class LevelSelection : MonoBehaviour
 	public UnityEngine.UI.Text clueText;
 	public UnityEngine.UI.Text giddyupText;
 	public UnityEngine.UI.Text adiosText;
-	public UnityEngine.UI.Text woahText;
 	public UnityEngine.UI.Text normalText;
 	public UnityEngine.UI.Text testText;
 
@@ -221,7 +219,7 @@ public class LevelSelection : MonoBehaviour
 
 	public void BackToLevelSection()
 	{
-		StartCoroutine(FadeAndHideButton(woahText, woahButton));
+		levelController.HideWoahText();
 		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton, 1f));
 		StartCoroutine(FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
 		camera.currentView = 1;
@@ -241,7 +239,7 @@ public class LevelSelection : MonoBehaviour
 	public void GoToLevel()
 	{
 		camera.currentView = 2;
-		StartCoroutine(FadeAndDisplayButton(woahText, woahButton, 1f));
+		levelController.ShowWoahText("← Woah There");
 		StartCoroutine(FadeAndHideButton(giddyupText, giddyUpButton));
 		StartCoroutine(FadeAndHideButton(adiosText, adiosButton));
 	}
@@ -279,6 +277,16 @@ public class LevelSelection : MonoBehaviour
 		unlockedLevel2 = false;
 		unlockedLevel3 = false;
 		unlockedLevel4 = false;
+	}
+
+	public void PuzzleSolved(string levelFinished)
+	{
+		if (levelFinished == "Teapot")
+			unlockedLevel2 = true;
+		if (levelFinished == "Elephant")
+			unlockedLevel3 = true;
+		if (levelFinished == "Level 4")
+			unlockedLevel4 = true;
 	}
 }
 

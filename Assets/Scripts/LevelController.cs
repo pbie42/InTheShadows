@@ -5,18 +5,10 @@ using UnityEngine;
 public class LevelController : MonoBehaviour
 {
 	public GameObject currentLevel;
-
-	// Use this for initialization
-	void Start()
-	{
-
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
+	public UnityEngine.UI.Text winText;
+	public UnityEngine.UI.Text woahText;
+	public GameObject woahButton;
+	public GuiController guiController;
 
 	public void SetLevelActive(bool active)
 	{
@@ -31,4 +23,34 @@ public class LevelController : MonoBehaviour
 		yield return new WaitForSeconds(2);
 		currentLevel.SetActive(false);
 	}
+
+	public void PuzzleSolved(string objectName)
+	{
+		winText.text = "You solved the " + objectName + "!";
+		woahText.text = "← Next Level";
+		StartCoroutine(guiController.FadeTextToFullAlpha(1f, winText));
+	}
+
+	public void ShowWoahText(string text)
+	{
+		woahText.text = text;
+		StartCoroutine(guiController.FadeAndDisplayButton(woahText, woahButton, 1f));
+	}
+
+	public void HideWoahText()
+	{
+		StartCoroutine(guiController.FadeAndHideButton(woahText, woahButton));
+	}
+
+	public void HideWinText()
+	{
+		StartCoroutine(guiController.FadeTextToZeroAlpha(1f, winText));
+	}
+
+	public void ShowWinText()
+	{
+		StartCoroutine(guiController.FadeTextToFullAlpha(1f, winText));
+	}
+
+
 }
