@@ -25,6 +25,7 @@ public class LevelSelection : MonoBehaviour
 	public GameObject level2;
 	public GameObject giddyUpButton;
 	public GameObject adiosButton;
+	public GameObject woahButton;
 	public LevelController levelController;
 	public UnityEngine.Light level1SpotLight;
 	public UnityEngine.Light level1TopLight;
@@ -37,6 +38,7 @@ public class LevelSelection : MonoBehaviour
 	public UnityEngine.UI.Text clueText;
 	public UnityEngine.UI.Text giddyupText;
 	public UnityEngine.UI.Text adiosText;
+	public UnityEngine.UI.Text woahText;
 	public UnityEngine.UI.Text normalText;
 	public UnityEngine.UI.Text testText;
 
@@ -75,7 +77,7 @@ public class LevelSelection : MonoBehaviour
 	{
 		clueText.text = clues[level];
 		levelController.currentLevel = levels[level];
-		StartCoroutine(FadeAndDisplayButton(giddyupText, giddyUpButton));
+		StartCoroutine(FadeAndDisplayButton(giddyupText, giddyUpButton, 0f));
 		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
 		StopRoutines();
 		TurnOffOthers(level);
@@ -213,7 +215,15 @@ public class LevelSelection : MonoBehaviour
 	{
 		RelockLevels();
 		StartCoroutine(FadeTextToFullAlpha(1.5f, clueText));
-		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton));
+		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton, 2f));
+		camera.currentView = 1;
+	}
+
+	public void BackToLevelSection()
+	{
+		StartCoroutine(FadeAndHideButton(woahText, woahButton));
+		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton, 1f));
+		StartCoroutine(FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
 		camera.currentView = 1;
 	}
 
@@ -224,29 +234,32 @@ public class LevelSelection : MonoBehaviour
 		unlockedLevel3 = true;
 		unlockedLevel4 = true;
 		StartCoroutine(FadeTextToFullAlpha(1.5f, clueText));
-		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton));
+		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton, 2f));
 		camera.currentView = 1;
 	}
 
 	public void GoToLevel()
 	{
 		camera.currentView = 2;
+		StartCoroutine(FadeAndDisplayButton(woahText, woahButton, 1f));
 		StartCoroutine(FadeAndHideButton(giddyupText, giddyUpButton));
 		StartCoroutine(FadeAndHideButton(adiosText, adiosButton));
 	}
 
 	private IEnumerator FadeAndHideButton(UnityEngine.UI.Text text, GameObject button)
 	{
+		button.GetComponent<UnityEngine.UI.Button>().interactable = false;
 		StartCoroutine(FadeTextToZeroAlpha(1.5f, text));
 		yield return new WaitForSeconds(1.5f);
 		button.SetActive(false);
 	}
 
-	private IEnumerator FadeAndDisplayButton(UnityEngine.UI.Text text, GameObject button)
+	private IEnumerator FadeAndDisplayButton(UnityEngine.UI.Text text, GameObject button, float wait)
 	{
 		button.SetActive(true);
+		button.GetComponent<UnityEngine.UI.Button>().interactable = true;
+		yield return new WaitForSeconds(wait);
 		StartCoroutine(FadeTextToFullAlpha(1.5f, text));
-		yield return new WaitForSeconds(1.5f);
 	}
 
 	public void BackToStart()
