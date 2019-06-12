@@ -25,11 +25,11 @@ public class CameraController : MonoBehaviour
 
 	void Update()
 	{
-		if (_viewIndex != 0 && (Input.GetKeyDown(KeyCode.Alpha1) || currentView == 0))
+		if (_viewIndex != 0 && currentView == 0)
 			Location1();
-		if (_viewIndex != 1 && (Input.GetKeyDown(KeyCode.Alpha2) || currentView == 1))
+		if (_viewIndex != 1 && currentView == 1)
 			Location2();
-		if (_viewIndex != 2 && (Input.GetKeyDown(KeyCode.Alpha3) || currentView == 2))
+		if (_viewIndex != 2 && currentView == 2)
 			Location3();
 		if (_viewIndex != 3 && Input.GetKeyDown(KeyCode.Alpha4))
 			Location4();

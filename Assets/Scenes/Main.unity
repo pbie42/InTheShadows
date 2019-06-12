@@ -1105,6 +1105,7 @@ MonoBehaviour:
   level2: {fileID: 1507327080}
   giddyUpButton: {fileID: 1060663140}
   adiosButton: {fileID: 10766018}
+  woahButton: {fileID: 357327561}
   levelController: {fileID: 1969781884}
   level1SpotLight: {fileID: 86545441}
   level1TopLight: {fileID: 846400933}
@@ -1117,6 +1118,7 @@ MonoBehaviour:
   clueText: {fileID: 336048486}
   giddyupText: {fileID: 2084323755}
   adiosText: {fileID: 758228637}
+  woahText: {fileID: 1199011315}
   normalText: {fileID: 1095460449}
   testText: {fileID: 998207758}
 --- !u!1 &257457361
@@ -1292,12 +1294,12 @@ GameObject:
   - component: {fileID: 357327564}
   - component: {fileID: 357327563}
   m_Layer: 0
-  m_Name: Button
+  m_Name: Woah Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &357327562
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1355,7 +1357,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1199011315}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 250748349}
+        m_MethodName: BackToLevelSection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &357327564
@@ -4824,7 +4837,7 @@ GameObject:
   - component: {fileID: 1199011316}
   - component: {fileID: 1199011315}
   m_Layer: 0
-  m_Name: Horses Text
+  m_Name: Woah Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4860,7 +4873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
