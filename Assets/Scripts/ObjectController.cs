@@ -26,6 +26,7 @@ public class ObjectController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		Debug.Log("gameObject.name: " + gameObject.name);
 		if (_collidersHit == colliderPoints && !_solved)
 		{
 			_solved = true;

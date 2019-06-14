@@ -20,7 +20,7 @@ public class LevelSelection : MonoBehaviour
 	private IEnumerator _topCoroutine;
 	private string _howdyText = "Howdy, Partner !\nPick your poison";
 	public bool canSelect = false;
-	public CameraController camera;
+	public CameraController mainCamera;
 	public GameObject level1;
 	public GameObject level2;
 	public GameObject giddyUpButton;
@@ -214,15 +214,16 @@ public class LevelSelection : MonoBehaviour
 		RelockLevels();
 		StartCoroutine(FadeTextToFullAlpha(1.5f, clueText));
 		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton, 2f));
-		camera.currentView = 1;
+		mainCamera.currentView = 1;
 	}
 
 	public void BackToLevelSection()
 	{
 		levelController.HideWoahText();
+		levelController.HideWinText();
 		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton, 1f));
 		StartCoroutine(FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
-		camera.currentView = 1;
+		mainCamera.currentView = 1;
 	}
 
 	public void TestGame()
@@ -233,12 +234,12 @@ public class LevelSelection : MonoBehaviour
 		unlockedLevel4 = true;
 		StartCoroutine(FadeTextToFullAlpha(1.5f, clueText));
 		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton, 2f));
-		camera.currentView = 1;
+		mainCamera.currentView = 1;
 	}
 
 	public void GoToLevel()
 	{
-		camera.currentView = 2;
+		mainCamera.currentView = 2;
 		levelController.ShowWoahText("← Woah There");
 		StartCoroutine(FadeAndHideButton(giddyupText, giddyUpButton));
 		StartCoroutine(FadeAndHideButton(adiosText, adiosButton));
@@ -268,7 +269,7 @@ public class LevelSelection : MonoBehaviour
 		StartCoroutine(FadeTextToZeroAlpha(1.5f, clueText));
 		TurnOffAll();
 		clueText.text = _howdyText;
-		camera.currentView = 0;
+		mainCamera.currentView = 0;
 	}
 
 	private void RelockLevels()
