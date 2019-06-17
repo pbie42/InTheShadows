@@ -38,7 +38,6 @@ public class ObjectsController : MonoBehaviour
 			if (Physics.Raycast(ray, out hit, 1000))
 			{
 				string name = hit.collider.gameObject.name;
-				Debug.Log("hit name: " + name);
 				if (GameObject.ReferenceEquals(piece1, hit.collider.gameObject))
 					_currentPiece = piece1;
 				else if (GameObject.ReferenceEquals(piece2, hit.collider.gameObject))
