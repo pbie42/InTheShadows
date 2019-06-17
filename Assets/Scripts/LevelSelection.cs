@@ -23,6 +23,7 @@ public class LevelSelection : MonoBehaviour
 	public CameraController mainCamera;
 	public GameObject level1;
 	public GameObject level2;
+	public GameObject level3;
 	public GameObject giddyUpButton;
 	public GameObject adiosButton;
 	public LevelController levelController;
@@ -84,7 +85,6 @@ public class LevelSelection : MonoBehaviour
 
 	private void TurnOffOthers(string level)
 	{
-		Debug.Log("level: " + level);
 		if (level != "Level 1")
 		{
 			level1TopLight.intensity = 0;
@@ -185,6 +185,7 @@ public class LevelSelection : MonoBehaviour
 	{
 		levels.Add("Level 1", level1);
 		levels.Add("Level 2", level2);
+		levels.Add("Level 3", level3);
 		spotLights.Add("Level 1", level1SpotLight);
 		spotLights.Add("Level 2", level2SpotLight);
 		spotLights.Add("Level 3", level3SpotLight);
@@ -195,7 +196,7 @@ public class LevelSelection : MonoBehaviour
 		topLights.Add("Level 4", level4TopLight);
 		clues.Add("Level 1", "Ain't nobody dope as me I'm just so short and stout");
 		clues.Add("Level 2", "Always Remembers, \nNever Forgets");
-		clues.Add("Level 3", "Test 3");
+		clues.Add("Level 3", "Give me a spin and I'll take you anywhere");
 		clues.Add("Level 4", "The answer to life, the universe, and everything");
 		clueText.text = _howdyText;
 		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
@@ -286,7 +287,7 @@ public class LevelSelection : MonoBehaviour
 			unlockedLevel2 = true;
 		if (levelFinished == "Elephant")
 			unlockedLevel3 = true;
-		if (levelFinished == "Level 4")
+		if (levelFinished == "Globe")
 			unlockedLevel4 = true;
 	}
 }

@@ -18,7 +18,7 @@ public class MainSpotlight : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		Debug.Log("transform.eulerAngles.x: " + transform.localEulerAngles.x);
+		// Debug.Log("transform.eulerAngles.x: " + transform.localEulerAngles.x);
 		if (_rotX <= -7.0f)
 			_increaseX = true;
 		else if (_rotX >= 8.0f)
