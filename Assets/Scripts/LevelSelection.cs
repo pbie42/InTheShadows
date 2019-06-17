@@ -24,6 +24,7 @@ public class LevelSelection : MonoBehaviour
 	public GameObject level1;
 	public GameObject level2;
 	public GameObject level3;
+	public GameObject level4;
 	public GameObject giddyUpButton;
 	public GameObject adiosButton;
 	public LevelController levelController;
@@ -186,6 +187,7 @@ public class LevelSelection : MonoBehaviour
 		levels.Add("Level 1", level1);
 		levels.Add("Level 2", level2);
 		levels.Add("Level 3", level3);
+		levels.Add("Level 4", level4);
 		spotLights.Add("Level 1", level1SpotLight);
 		spotLights.Add("Level 2", level2SpotLight);
 		spotLights.Add("Level 3", level3SpotLight);
