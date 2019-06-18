@@ -58,6 +58,12 @@ public class ObjectsController : MonoBehaviour
 			_mPosDelta = Input.mousePosition - _mPrevPos;
 			_currentPiece.transform.Rotate(_parentRight, Vector3.Dot(_mPosDelta, _parentUp), Space.World);
 		}
+		else if (canMove && !Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButton(0))
+		{
+			_mPosDelta = Input.mousePosition - _mPrevPos;
+			Vector3 parentPos = _currentPiece.transform.parent.position;
+			parentPos = new Vector3(parentPos.x, Input.mousePosition.y, parentPos.z);
+		}
 		else if (canHorizontal && !Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButton(0))
 		{
 			_mPosDelta = Input.mousePosition - _mPrevPos;

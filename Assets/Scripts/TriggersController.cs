@@ -12,6 +12,8 @@ public class TriggersController : MonoBehaviour
 	{
 		if (GameObject.ReferenceEquals(desiredCollider, other.gameObject))
 		{
+			Debug.Log("Triggered!");
+			Debug.Log("other.gameObject.name: " + other.gameObject.name);
 			_validCoroutine = ValidateShadow();
 			StartCoroutine(_validCoroutine);
 		}
@@ -28,7 +30,7 @@ public class TriggersController : MonoBehaviour
 
 	private IEnumerator ValidateShadow()
 	{
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1f);
 		theObjectsController.colliderHit();
 	}
 }
