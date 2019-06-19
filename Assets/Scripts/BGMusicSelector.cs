@@ -24,7 +24,7 @@ public class BGMusicSelector : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (!tracks[trackSelector].isPlaying)
+		if (Application.isFocused && !tracks[trackSelector].isPlaying)
 		{
 			if (trackSelector < tracksCount)
 				trackSelector++;
@@ -32,5 +32,11 @@ public class BGMusicSelector : MonoBehaviour
 				trackSelector = 0;
 			tracks[trackSelector].Play();
 		}
+	}
+
+	public void PlayGunAndBottle()
+	{
+		gun.Play();
+		bottle.Play();
 	}
 }
