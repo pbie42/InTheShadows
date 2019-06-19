@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class GuiController : MonoBehaviour
 {
+	private float _fadeInSpeed = 2f;
+	private float _fadeOutSpeed = 0.5f;
+	private float _spotLightIntensity = 22.83f;
+	private float _topLightIntensity = 87.86f;
+	private IEnumerator _spotCoroutine;
+	private IEnumerator _topCoroutine;
 
 	public IEnumerator FadeTextToFullAlpha(float t, UnityEngine.UI.Text i)
 	{
@@ -39,5 +45,58 @@ public class GuiController : MonoBehaviour
 		button.GetComponent<UnityEngine.UI.Button>().interactable = true;
 		yield return new WaitForSeconds(wait);
 		StartCoroutine(FadeTextToFullAlpha(1.5f, text));
+	}
+
+	public IEnumerator fadeInAndOut(Light lightToFade, bool fadeIn, float duration, float maxIntensity)
+	{
+		float minLuminosity = 0; // min intensity
+		float maxLuminosity = maxIntensity; // max intensity
+		float counter = 0f;
+		//Set Values depending on if fadeIn or fadeOut
+		float a, b;
+
+		if (fadeIn)
+		{
+			a = minLuminosity;
+			b = maxLuminosity;
+		}
+		else
+		{
+			a = maxLuminosity;
+			b = minLuminosity;
+		}
+
+		float currentIntensity = lightToFade.intensity;
+
+		while (counter < duration)
+		{
+			counter += Time.deltaTime;
+			lightToFade.intensity = Mathf.Lerp(a, b, counter / duration);
+			yield return null;
+		}
+	}
+
+	public void fadeLights(Light topLight, Light spotLight, bool fadeIn)
+	{
+		float fadeSpeed = fadeIn ? _fadeInSpeed : _fadeOutSpeed;
+		_topCoroutine = fadeInAndOut(topLight, fadeIn, fadeSpeed, _topLightIntensity);
+		_spotCoroutine = fadeInAndOut(spotLight, fadeIn, fadeSpeed, _spotLightIntensity);
+		StartCoroutine(_topCoroutine);
+		StartCoroutine(_spotCoroutine);
+	}
+
+	public void StopRoutines()
+	{
+		if (_topCoroutine != null)
+			StopCoroutine(_topCoroutine);
+		if (_spotCoroutine != null)
+			StopCoroutine(_spotCoroutine);
+	}
+
+	public IEnumerator ButtonFadeIns(UnityEngine.UI.Text button1, UnityEngine.UI.Text button2)
+	{
+		yield return new WaitForSeconds(2);
+		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, button1));
+		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, button2));
 	}
 }

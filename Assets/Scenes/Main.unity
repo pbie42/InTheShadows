@@ -692,7 +692,7 @@ GameObject:
   - component: {fileID: 86545440}
   - component: {fileID: 86545441}
   m_Layer: 0
-  m_Name: Spotlight
+  m_Name: Spotlight Lvl 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1822,24 +1822,28 @@ MonoBehaviour:
   unlockedLevel4: 0
   canSelect: 0
   mainCamera: {fileID: 369483552}
-  level1: {fileID: 740531795}
-  level2: {fileID: 1507327080}
-  level3: {fileID: 1901748643}
-  level4: {fileID: 3551429}
-  giddyUpButton: {fileID: 1060663140}
   adiosButton: {fileID: 10766018}
+  giddyUpButton: {fileID: 1060663140}
+  levelsArray:
+  - {fileID: 740531795}
+  - {fileID: 1507327080}
+  - {fileID: 1901748643}
+  - {fileID: 3551429}
+  guiController: {fileID: 584845727}
   levelController: {fileID: 1969781884}
-  level1SpotLight: {fileID: 86545441}
-  level1TopLight: {fileID: 846400933}
-  level2SpotLight: {fileID: 703228322}
-  level2TopLight: {fileID: 618500083}
-  level3SpotLight: {fileID: 792158576}
-  level3TopLight: {fileID: 1601849364}
-  level4SpotLight: {fileID: 2122200129}
-  level4TopLight: {fileID: 2135027614}
+  spotLightsArray:
+  - {fileID: 86545441}
+  - {fileID: 703228322}
+  - {fileID: 792158576}
+  - {fileID: 2122200129}
+  topLightsArray:
+  - {fileID: 846400933}
+  - {fileID: 618500083}
+  - {fileID: 1601849364}
+  - {fileID: 2135027614}
+  adiosText: {fileID: 758228637}
   clueText: {fileID: 336048486}
   giddyupText: {fileID: 2084323755}
-  adiosText: {fileID: 758228637}
   normalText: {fileID: 1095460449}
   testText: {fileID: 998207758}
 --- !u!1001 &251812937
@@ -3795,7 +3799,7 @@ GameObject:
   - component: {fileID: 618500082}
   - component: {fileID: 618500083}
   m_Layer: 0
-  m_Name: Toplight
+  m_Name: Toplight Lvl 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4344,7 +4348,7 @@ GameObject:
   - component: {fileID: 703228321}
   - component: {fileID: 703228322}
   m_Layer: 0
-  m_Name: Spotlight
+  m_Name: Spotlight Lvl 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5157,7 +5161,7 @@ GameObject:
   - component: {fileID: 792158575}
   - component: {fileID: 792158576}
   m_Layer: 0
-  m_Name: Spotlight
+  m_Name: Spotlight Lvl 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5767,7 +5771,7 @@ GameObject:
   - component: {fileID: 846400932}
   - component: {fileID: 846400933}
   m_Layer: 0
-  m_Name: Toplight
+  m_Name: Toplight Lvl 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10494,7 +10498,7 @@ GameObject:
   - component: {fileID: 1601849363}
   - component: {fileID: 1601849364}
   m_Layer: 0
-  m_Name: Toplight
+  m_Name: Toplight Lvl 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12974,7 +12978,7 @@ GameObject:
   - component: {fileID: 2122200128}
   - component: {fileID: 2122200129}
   m_Layer: 0
-  m_Name: Spotlight
+  m_Name: Spotlight Lvl 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13044,7 +13048,7 @@ GameObject:
   - component: {fileID: 2135027613}
   - component: {fileID: 2135027614}
   m_Layer: 0
-  m_Name: Toplight
+  m_Name: Toplight Lvl 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

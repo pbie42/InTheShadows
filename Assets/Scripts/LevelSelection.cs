@@ -8,37 +8,24 @@ public class LevelSelection : MonoBehaviour
 	[HideInInspector] public bool unlockedLevel2 = false;
 	[HideInInspector] public bool unlockedLevel3 = false;
 	[HideInInspector] public bool unlockedLevel4 = false;
-	private Dictionary<string, string> clues = new Dictionary<string, string>();
 	private Dictionary<string, GameObject> levels = new Dictionary<string, GameObject>();
+	private Dictionary<string, string> clues = new Dictionary<string, string>();
 	private Dictionary<string, UnityEngine.Light> spotLights = new Dictionary<string, UnityEngine.Light>();
 	private Dictionary<string, UnityEngine.Light> topLights = new Dictionary<string, UnityEngine.Light>();
 	private float _fadeInSpeed = 2f;
-	private float _fadeOutSpeed = 0.5f;
-	private float _spotLightIntensity = 22.83f;
-	private float _topLightIntensity = 87.86f;
-	private IEnumerator _spotCoroutine;
-	private IEnumerator _topCoroutine;
 	private string _howdyText = "Howdy, Partner !\nPick your poison";
 	public bool canSelect = false;
 	public CameraController mainCamera;
-	public GameObject level1;
-	public GameObject level2;
-	public GameObject level3;
-	public GameObject level4;
-	public GameObject giddyUpButton;
 	public GameObject adiosButton;
+	public GameObject giddyUpButton;
+	public GameObject[] levelsArray;
+	public GuiController guiController;
 	public LevelController levelController;
-	public UnityEngine.Light level1SpotLight;
-	public UnityEngine.Light level1TopLight;
-	public UnityEngine.Light level2SpotLight;
-	public UnityEngine.Light level2TopLight;
-	public UnityEngine.Light level3SpotLight;
-	public UnityEngine.Light level3TopLight;
-	public UnityEngine.Light level4SpotLight;
-	public UnityEngine.Light level4TopLight;
+	public UnityEngine.Light[] spotLightsArray;
+	public UnityEngine.Light[] topLightsArray;
+	public UnityEngine.UI.Text adiosText;
 	public UnityEngine.UI.Text clueText;
 	public UnityEngine.UI.Text giddyupText;
-	public UnityEngine.UI.Text adiosText;
 	public UnityEngine.UI.Text normalText;
 	public UnityEngine.UI.Text testText;
 
@@ -77,34 +64,34 @@ public class LevelSelection : MonoBehaviour
 	{
 		clueText.text = clues[level];
 		levelController.currentLevel = levels[level];
-		StartCoroutine(FadeAndDisplayButton(giddyupText, giddyUpButton, 0f));
-		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
-		StopRoutines();
+		StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 0f));
+		StartCoroutine(guiController.FadeTextToFullAlpha(_fadeInSpeed, clueText));
+		guiController.StopRoutines();
 		TurnOffOthers(level);
-		fadeLights(topLights[level], spotLights[level], true);
+		guiController.fadeLights(topLights[level], spotLights[level], true);
 	}
 
 	private void TurnOffOthers(string level)
 	{
 		if (level != "Level 1")
 		{
-			level1TopLight.intensity = 0;
-			level1SpotLight.intensity = 0;
+			topLights["Level 1"].intensity = 0;
+			spotLights["Level 1"].intensity = 0;
 		}
 		if (level != "Level 2")
 		{
-			level2TopLight.intensity = 0;
-			level2SpotLight.intensity = 0;
+			topLights["Level 2"].intensity = 0;
+			spotLights["Level 2"].intensity = 0;
 		}
-		if (level != "Level")
+		if (level != "Level 3")
 		{
-			level3TopLight.intensity = 0;
-			level3SpotLight.intensity = 0;
+			topLights["Level 3"].intensity = 0;
+			spotLights["Level 3"].intensity = 0;
 		}
 		if (level != "Level 4")
 		{
-			level4TopLight.intensity = 0;
-			level4SpotLight.intensity = 0;
+			topLights["Level 4"].intensity = 0;
+			spotLights["Level 4"].intensity = 0;
 		}
 	}
 
@@ -116,107 +103,11 @@ public class LevelSelection : MonoBehaviour
 		TurnOffOthers("Level 4");
 	}
 
-	private void fadeLights(Light topLight, Light spotLight, bool fadeIn)
-	{
-		float fadeSpeed = fadeIn ? _fadeInSpeed : _fadeOutSpeed;
-		_topCoroutine = fadeInAndOut(topLight, fadeIn, fadeSpeed, _topLightIntensity);
-		_spotCoroutine = fadeInAndOut(spotLight, fadeIn, fadeSpeed, _spotLightIntensity);
-		StartCoroutine(_topCoroutine);
-		StartCoroutine(_spotCoroutine);
-	}
-
-	private void StopRoutines()
-	{
-		if (_topCoroutine != null)
-			StopCoroutine(_topCoroutine);
-		if (_spotCoroutine != null)
-			StopCoroutine(_spotCoroutine);
-	}
-
-	private IEnumerator fadeInAndOut(Light lightToFade, bool fadeIn, float duration, float maxIntensity)
-	{
-		float minLuminosity = 0; // min intensity
-		float maxLuminosity = maxIntensity; // max intensity
-		float counter = 0f;
-		//Set Values depending on if fadeIn or fadeOut
-		float a, b;
-
-		if (fadeIn)
-		{
-			a = minLuminosity;
-			b = maxLuminosity;
-		}
-		else
-		{
-			a = maxLuminosity;
-			b = minLuminosity;
-		}
-
-		float currentIntensity = lightToFade.intensity;
-
-		while (counter < duration)
-		{
-			counter += Time.deltaTime;
-			lightToFade.intensity = Mathf.Lerp(a, b, counter / duration);
-			yield return null;
-		}
-	}
-
-	private IEnumerator FadeTextToFullAlpha(float t, UnityEngine.UI.Text i)
-	{
-		i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
-		while (i.color.a < 1.0f)
-		{
-			i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / t));
-			yield return null;
-		}
-	}
-
-	public IEnumerator FadeTextToZeroAlpha(float t, UnityEngine.UI.Text i)
-	{
-		i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
-		while (i.color.a > 0.0f)
-		{
-			i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
-			yield return null;
-		}
-	}
-
-	private void SetupLevelSelection()
-	{
-		levels.Add("Level 1", level1);
-		levels.Add("Level 2", level2);
-		levels.Add("Level 3", level3);
-		levels.Add("Level 4", level4);
-		spotLights.Add("Level 1", level1SpotLight);
-		spotLights.Add("Level 2", level2SpotLight);
-		spotLights.Add("Level 3", level3SpotLight);
-		spotLights.Add("Level 4", level4SpotLight);
-		topLights.Add("Level 1", level1TopLight);
-		topLights.Add("Level 2", level2TopLight);
-		topLights.Add("Level 3", level3TopLight);
-		topLights.Add("Level 4", level4TopLight);
-		clues.Add("Level 1", "Ain't nobody dope as me I'm just so short and stout");
-		clues.Add("Level 2", "Always Remembers, \nNever Forgets");
-		clues.Add("Level 3", "Give me a spin and I'll take you anywhere");
-		clues.Add("Level 4", "The answer to life, the universe, and everything");
-		clueText.text = _howdyText;
-		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, clueText));
-		StartCoroutine(ButtonFadeIns());
-	}
-
-	IEnumerator ButtonFadeIns()
-	{
-		yield return new WaitForSeconds(2);
-		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, normalText));
-		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, testText));
-	}
-
 	public void NormalGame()
 	{
 		RelockLevels();
-		StartCoroutine(FadeTextToFullAlpha(1.5f, clueText));
-		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton, 2f));
+		StartCoroutine(guiController.FadeTextToFullAlpha(1.5f, clueText));
+		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 2f));
 		mainCamera.currentView = 1;
 	}
 
@@ -224,8 +115,8 @@ public class LevelSelection : MonoBehaviour
 	{
 		levelController.HideWoahText();
 		levelController.HideWinText();
-		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton, 1f));
-		StartCoroutine(FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
+		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 1f));
+		StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
 		mainCamera.currentView = 1;
 	}
 
@@ -235,8 +126,8 @@ public class LevelSelection : MonoBehaviour
 		unlockedLevel2 = true;
 		unlockedLevel3 = true;
 		unlockedLevel4 = true;
-		StartCoroutine(FadeTextToFullAlpha(1.5f, clueText));
-		StartCoroutine(FadeAndDisplayButton(adiosText, adiosButton, 2f));
+		StartCoroutine(guiController.FadeTextToFullAlpha(1.5f, clueText));
+		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 2f));
 		mainCamera.currentView = 1;
 	}
 
@@ -244,32 +135,16 @@ public class LevelSelection : MonoBehaviour
 	{
 		mainCamera.currentView = 2;
 		levelController.ShowWoahText("← Woah There");
-		StartCoroutine(FadeAndHideButton(giddyupText, giddyUpButton));
-		StartCoroutine(FadeAndHideButton(adiosText, adiosButton));
-	}
-
-	private IEnumerator FadeAndHideButton(UnityEngine.UI.Text text, GameObject button)
-	{
-		button.GetComponent<UnityEngine.UI.Button>().interactable = false;
-		StartCoroutine(FadeTextToZeroAlpha(1.5f, text));
-		yield return new WaitForSeconds(1.5f);
-		button.SetActive(false);
-	}
-
-	private IEnumerator FadeAndDisplayButton(UnityEngine.UI.Text text, GameObject button, float wait)
-	{
-		button.SetActive(true);
-		button.GetComponent<UnityEngine.UI.Button>().interactable = true;
-		yield return new WaitForSeconds(wait);
-		StartCoroutine(FadeTextToFullAlpha(1.5f, text));
+		StartCoroutine(guiController.FadeAndHideButton(giddyupText, giddyUpButton));
+		StartCoroutine(guiController.FadeAndHideButton(adiosText, adiosButton));
 	}
 
 	public void BackToStart()
 	{
 		RelockLevels();
-		StartCoroutine(FadeAndHideButton(giddyupText, giddyUpButton));
-		StartCoroutine(FadeAndHideButton(adiosText, adiosButton));
-		StartCoroutine(FadeTextToZeroAlpha(1.5f, clueText));
+		StartCoroutine(guiController.FadeAndHideButton(giddyupText, giddyUpButton));
+		StartCoroutine(guiController.FadeAndHideButton(adiosText, adiosButton));
+		StartCoroutine(guiController.FadeTextToZeroAlpha(1.5f, clueText));
 		TurnOffAll();
 		clueText.text = _howdyText;
 		mainCamera.currentView = 0;
@@ -291,6 +166,29 @@ public class LevelSelection : MonoBehaviour
 			unlockedLevel3 = true;
 		if (levelFinished == "Globe")
 			unlockedLevel4 = true;
+	}
+
+	private void SetupLevelSelection()
+	{
+		levels.Add("Level 1", levelsArray[0]);
+		levels.Add("Level 2", levelsArray[1]);
+		levels.Add("Level 3", levelsArray[2]);
+		levels.Add("Level 4", levelsArray[3]);
+		spotLights.Add("Level 1", spotLightsArray[0]);
+		spotLights.Add("Level 2", spotLightsArray[1]);
+		spotLights.Add("Level 3", spotLightsArray[2]);
+		spotLights.Add("Level 4", spotLightsArray[3]);
+		topLights.Add("Level 1", topLightsArray[0]);
+		topLights.Add("Level 2", topLightsArray[1]);
+		topLights.Add("Level 3", topLightsArray[2]);
+		topLights.Add("Level 4", topLightsArray[3]);
+		clues.Add("Level 1", "Ain't nobody dope as me I'm just so short and stout");
+		clues.Add("Level 2", "Always Remembers, \nNever Forgets");
+		clues.Add("Level 3", "Give me a spin and I'll take you anywhere");
+		clues.Add("Level 4", "The answer to life, the universe, and everything");
+		clueText.text = _howdyText;
+		StartCoroutine(guiController.FadeTextToFullAlpha(_fadeInSpeed, clueText));
+		StartCoroutine(guiController.ButtonFadeIns(normalText, testText));
 	}
 }
 
