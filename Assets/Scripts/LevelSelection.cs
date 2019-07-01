@@ -195,6 +195,17 @@ public class LevelSelection : MonoBehaviour
 		yield return new WaitForSeconds(0.5f);
 		levelsBottles[level].GetComponent<Renderer>().enabled = false;
 		finishedLevels[level].SetActive(true);
+		SelectNextLevel(level);
+	}
+
+	private void SelectNextLevel(string finishedLevel)
+	{
+		if (finishedLevel == "Level 1")
+			SelectLevel("Level 2");
+		else if (finishedLevel == "Level 2")
+			SelectLevel("Level 3");
+		else if (finishedLevel == "Level 3")
+			SelectLevel("Level 4");
 	}
 
 	private void SetupLevelSelection()
