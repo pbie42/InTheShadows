@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class ObjectController : MonoBehaviour
 {
-	public bool canHorizontal;
-	public bool canVertical;
-	public bool canMove;
 	private bool _solved = false;
-	public int colliderPoints;
-	public LevelSelection levelSelection;
-	public LevelController levelController;
 	private int _collidersHit = 0;
-	Vector3 _mPrevPos = Vector3.zero;
+	public bool canHorizontal;
+	public bool canMove;
+	public bool canVertical;
+	public int colliderPoints;
+	public LevelController levelController;
+	public LevelSelection levelSelection;
 	Vector3 _mPosDelta = Vector3.zero;
-	Vector3 _parentUp;
+	Vector3 _mPrevPos = Vector3.zero;
 	Vector3 _parentRight;
+	Vector3 _parentUp;
 
 	private void Start()
 	{
@@ -26,7 +26,6 @@ public class ObjectController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		// Debug.Log("gameObject.name: " + gameObject.name);
 		if (_collidersHit == colliderPoints && !_solved)
 		{
 			_solved = true;
@@ -43,6 +42,8 @@ public class ObjectController : MonoBehaviour
 			_mPosDelta = Input.mousePosition - _mPrevPos;
 			transform.Rotate(_parentUp, -Vector3.Dot(_mPosDelta, _parentRight), Space.World);
 		}
+		if (_solved && !levelController.IsWinTextActive() && levelController.isFocused)
+			levelController.PuzzleSolved(gameObject.name);
 
 		_mPrevPos = Input.mousePosition;
 	}

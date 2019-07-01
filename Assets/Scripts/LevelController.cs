@@ -9,13 +9,20 @@ public class LevelController : MonoBehaviour
 	public UnityEngine.UI.Text woahText;
 	public GameObject woahButton;
 	public GuiController guiController;
+	[HideInInspector] public bool isFocused = false;
 
 	public void SetLevelActive(bool active)
 	{
 		if (active)
+		{
 			currentLevel.SetActive(active);
+			isFocused = true;
+		}
 		else
+		{
 			StartCoroutine(HideObjectAndScreen());
+			isFocused = false;
+		}
 	}
 
 	private IEnumerator HideObjectAndScreen()
@@ -29,6 +36,14 @@ public class LevelController : MonoBehaviour
 		winText.text = "You solved the " + objectName + "!";
 		woahText.text = "← Next Level";
 		StartCoroutine(guiController.FadeTextToFullAlpha(1f, winText));
+	}
+
+	public bool IsWinTextActive()
+	{
+		Debug.Log("winText.color.a: " + winText.color.a);
+		if (winText.color.a <= 0)
+			return false;
+		return true;
 	}
 
 	public void ShowWoahText(string text)
