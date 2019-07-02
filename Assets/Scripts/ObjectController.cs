@@ -64,9 +64,9 @@ public class ObjectController : MonoBehaviour
 		if (gameObject.name == "Elephant")
 			controlsText.text = "Hold down CTRL while moving to rotate vertically.";
 		if (gameObject.name == "Globe")
-			controlsText.text = "Click on the object you want to move.\n Previous controls apply.";
+			controlsText.text = "Click on the object you want to move.\nHold CTRL while moving to rotate vertically";
 		if (gameObject.name == "42")
-			controlsText.text = "Previous controls apply. Hold shift while moving to move object up and down.";
+			controlsText.text = "Click on the object you want to move.\nHold CTRL while moving to rotate vertically\nHold shift while moving to move object up and down.";
 	}
 
 	public void colliderHit()

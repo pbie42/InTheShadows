@@ -13,6 +13,8 @@ public class LevelSelection : MonoBehaviour
 	private Dictionary<string, UnityEngine.Light> _spotLights = new Dictionary<string, UnityEngine.Light>();
 	private Dictionary<string, UnityEngine.Light> _topLights = new Dictionary<string, UnityEngine.Light>();
 	private float _fadeInSpeed = 2f;
+	private float _gunShotSpeed = 1.5f;
+	private float _bottleBreakSpeed = 0.3f;
 	private string _howdyText = "Howdy, Partner !\nPick your poison";
 	public BGMusicSelector bgMusic;
 	public bool canSelect = false;
@@ -68,8 +70,10 @@ public class LevelSelection : MonoBehaviour
 		clueText.text = _clues[level];
 		levelController.currentLevel = null;
 		levelController.currentLevel = _levels[level];
-		StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 0f));
-		StartCoroutine(guiController.FadeTextToFullAlpha(_fadeInSpeed, clueText));
+		if (!giddyUpButton.activeSelf)
+			StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 0f));
+		if (clueText.color.a <= 0)
+			StartCoroutine(guiController.FadeTextToFullAlpha(_fadeInSpeed, clueText));
 		guiController.StopRoutines();
 		TurnOffOthers(level);
 		guiController.fadeLights(_topLights[level], _spotLights[level], true);
@@ -127,35 +131,31 @@ public class LevelSelection : MonoBehaviour
 		mainCamera.currentView = 1;
 	}
 
-	public void BackToLevelSection()
+	public void PrepareLevelSection()
 	{
 		levelController.HideWoahText();
-		levelController.HideWinText();
+		if (levelController.winText.color.a >= 1)
+			levelController.HideWinText();
 		levelController.HideControlsText();
 		levelController.HideAdiosButton();
-		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 1f));
-		StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
+		if (!adiosButton.activeSelf)
+			StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 1f));
+		if (!giddyUpButton.activeSelf)
+			StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
 		if (!_testMode && (_unlockedLevels["Level 2"] || _unlockedLevels["Level 3"] || _unlockedLevels["Level 4"]))
 			FinishedLevelAnimation();
+	}
+
+	public void BackToLevelSection()
+	{
+		PrepareLevelSection();
 		mainCamera.currentView = 1;
 	}
 
 	public void BackToStartFromLevel()
 	{
-		levelController.HideWoahText();
-		levelController.HideWinText();
-		levelController.HideControlsText();
-		levelController.HideAdiosButton();
-		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 1f));
-		StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
-		if (!_testMode && (_unlockedLevels["Level 2"] || _unlockedLevels["Level 3"] || _unlockedLevels["Level 4"]))
-			FinishedLevelAnimation();
-		StartCoroutine(guiController.FadeAndHideButton(giddyupText, giddyUpButton));
-		StartCoroutine(guiController.FadeAndHideButton(adiosText, adiosButton));
-		StartCoroutine(guiController.FadeTextToZeroAlpha(1.5f, clueText));
-		TurnOffAll();
-		clueText.text = _howdyText;
-		mainCamera.currentView = 0;
+		PrepareLevelSection();
+		BackToStart();
 	}
 
 	public void GoToLevel()
@@ -187,6 +187,8 @@ public class LevelSelection : MonoBehaviour
 				_unlockedLevels["Level 3"] = true;
 			if (levelFinished == "Globe")
 				_unlockedLevels["Level 4"] = true;
+			if (levelFinished == "42")
+				_unlockedLevels["Level 5"] = true;
 		}
 	}
 
@@ -198,16 +200,19 @@ public class LevelSelection : MonoBehaviour
 			StartCoroutine(FinishedAnimation("Level 2"));
 		if (_unlockedLevels["Level 4"] && !_finishedLevels["Level 3"].activeSelf)
 			StartCoroutine(FinishedAnimation("Level 3"));
+		if (_unlockedLevels["Level 5"] && !_finishedLevels["Level 4"].activeSelf)
+			StartCoroutine(FinishedAnimation("Level 4"));
 	}
 
 	IEnumerator FinishedAnimation(string level)
 	{
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(_gunShotSpeed);
 		bgMusic.PlayGunAndBottle();
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(_bottleBreakSpeed);
 		_levelsBottles[level].GetComponent<Renderer>().enabled = false;
 		_finishedLevels[level].SetActive(true);
-		SelectNextLevel(level);
+		if (level != "Level 4")
+			SelectNextLevel(level);
 	}
 
 	private void SelectNextLevel(string finishedLevel)
@@ -227,6 +232,7 @@ public class LevelSelection : MonoBehaviour
 			_levels.Add("Level " + (i + 1), levelsArray[i]);
 			_unlockedLevels.Add("Level " + (i + 1), false);
 		}
+		_unlockedLevels.Add("Level 5", false);
 		_unlockedLevels["Level 1"] = true;
 		for (int i = 0; i < spotLightsArray.Length; i++)
 			_spotLights.Add("Level " + (i + 1), spotLightsArray[i]);

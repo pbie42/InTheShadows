@@ -91,9 +91,9 @@ public class ObjectsController : MonoBehaviour
 		if (piece2.name == "Elephant")
 			controlsText.text = "Hold down CTRL while moving to rotate vertically.";
 		if (piece2.name == "Globe")
-			controlsText.text = "Click on the object you want to move.\n Previous controls apply.";
+			controlsText.text = "Click on the object you want to move.\nHold CTRL while moving to rotate vertically";
 		if (piece2.name == "42")
-			controlsText.text = "Previous controls apply. Hold shift while moving to move object up and down.";
+			controlsText.text = "Hold CTRL while moving to rotate vertically\nHold shift while moving to move object up and down.";
 	}
 
 	public void colliderHit()
