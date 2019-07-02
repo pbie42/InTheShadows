@@ -37,6 +37,7 @@ public class CameraController : MonoBehaviour
 
 	private void Location1()
 	{
+		levelController.SetLevelActive(false, 0.9f);
 		levelSelector.canSelect = false;
 		if (_viewIndex != 0)
 			StartCoroutine(fadeInAndOut(cartLights, false, _fadeSpeed));
@@ -51,7 +52,7 @@ public class CameraController : MonoBehaviour
 	{
 		levelSelector.canSelect = true;
 		StartCoroutine(HideMainMenu());
-		levelController.SetLevelActive(false);
+		levelController.SetLevelActive(false, 2);
 		StartCoroutine(fadeInAndOut(cartLights, true, _fadeSpeed));
 		if (_viewIndex == 2)
 			_currentView = views[2];
@@ -63,7 +64,7 @@ public class CameraController : MonoBehaviour
 	private void Location3()
 	{
 		levelSelector.canSelect = false;
-		levelController.SetLevelActive(true);
+		levelController.SetLevelActive(true, 2);
 		StartCoroutine(fadeInAndOut(cartLights, false, _fadeSpeed));
 		transform.rotation = views[2].rotation;
 		_currentView = views[3];

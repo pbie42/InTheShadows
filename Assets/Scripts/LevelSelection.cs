@@ -126,11 +126,29 @@ public class LevelSelection : MonoBehaviour
 	{
 		levelController.HideWoahText();
 		levelController.HideWinText();
+		levelController.HideAdiosButton();
 		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 1f));
 		StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
 		if (!_testMode && (_unlockedLevels["Level 2"] || _unlockedLevels["Level 3"] || _unlockedLevels["Level 4"]))
 			FinishedLevelAnimation();
 		mainCamera.currentView = 1;
+	}
+
+	public void BackToStartFromLevel()
+	{
+		levelController.HideWoahText();
+		levelController.HideWinText();
+		levelController.HideAdiosButton();
+		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 1f));
+		StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
+		if (!_testMode && (_unlockedLevels["Level 2"] || _unlockedLevels["Level 3"] || _unlockedLevels["Level 4"]))
+			FinishedLevelAnimation();
+		StartCoroutine(guiController.FadeAndHideButton(giddyupText, giddyUpButton));
+		StartCoroutine(guiController.FadeAndHideButton(adiosText, adiosButton));
+		StartCoroutine(guiController.FadeTextToZeroAlpha(1.5f, clueText));
+		TurnOffAll();
+		clueText.text = _howdyText;
+		mainCamera.currentView = 0;
 	}
 
 	public void GoToLevel()

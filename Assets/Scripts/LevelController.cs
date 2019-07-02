@@ -7,11 +7,13 @@ public class LevelController : MonoBehaviour
 	public GameObject currentLevel;
 	public UnityEngine.UI.Text winText;
 	public UnityEngine.UI.Text woahText;
+	public UnityEngine.UI.Text adiosText;
 	public GameObject woahButton;
+	public GameObject adiosButton;
 	public GuiController guiController;
 	[HideInInspector] public bool isFocused = false;
 
-	public void SetLevelActive(bool active)
+	public void SetLevelActive(bool active, float time)
 	{
 		if (active)
 		{
@@ -20,14 +22,14 @@ public class LevelController : MonoBehaviour
 		}
 		else
 		{
-			StartCoroutine(HideObjectAndScreen());
+			StartCoroutine(HideObjectAndScreen(time));
 			isFocused = false;
 		}
 	}
 
-	private IEnumerator HideObjectAndScreen()
+	private IEnumerator HideObjectAndScreen(float time)
 	{
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(time);
 		currentLevel.SetActive(false);
 	}
 
@@ -36,14 +38,24 @@ public class LevelController : MonoBehaviour
 		winText.text = "You solved the " + objectName + "!";
 		woahText.text = "← Next Level";
 		StartCoroutine(guiController.FadeTextToFullAlpha(1f, winText));
+		ShowAdiosButton();
 	}
 
 	public bool IsWinTextActive()
 	{
-		Debug.Log("winText.color.a: " + winText.color.a);
 		if (winText.color.a <= 0)
 			return false;
 		return true;
+	}
+
+	public void ShowAdiosButton()
+	{
+		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 1f));
+	}
+
+	public void HideAdiosButton()
+	{
+		StartCoroutine(guiController.FadeAndHideButton(adiosText, adiosButton));
 	}
 
 	public void ShowWoahText(string text)
