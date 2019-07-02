@@ -9,9 +9,11 @@ public class ObjectController : MonoBehaviour
 	public bool canHorizontal;
 	public bool canMove;
 	public bool canVertical;
+	public GameObject controlsMenu;
 	public int colliderPoints;
 	public LevelController levelController;
 	public LevelSelection levelSelection;
+	public UnityEngine.UI.Text controlsText;
 	Vector3 _mPosDelta = Vector3.zero;
 	Vector3 _mPrevPos = Vector3.zero;
 	Vector3 _parentRight;
@@ -44,8 +46,27 @@ public class ObjectController : MonoBehaviour
 		}
 		if (_solved && !levelController.IsWinTextActive() && levelController.isFocused)
 			levelController.PuzzleSolved(gameObject.name);
+		if (Input.GetKey(KeyCode.Tab))
+		{
+			SetInstructions();
+			controlsMenu.SetActive(true);
+		}
+		else
+			controlsMenu.SetActive(false);
 
 		_mPrevPos = Input.mousePosition;
+	}
+
+	private void SetInstructions()
+	{
+		if (gameObject.name == "Teapot")
+			controlsText.text = "Left mouse click and move to rotate horizontally.";
+		if (gameObject.name == "Elephant")
+			controlsText.text = "Hold down CTRL while moving to rotate vertically.";
+		if (gameObject.name == "Globe")
+			controlsText.text = "Click on the object you want to move.\n Previous controls apply.";
+		if (gameObject.name == "42")
+			controlsText.text = "Previous controls apply. Hold shift while moving to move object up and down.";
 	}
 
 	public void colliderHit()

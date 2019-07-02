@@ -8,6 +8,7 @@ public class LevelController : MonoBehaviour
 	public UnityEngine.UI.Text winText;
 	public UnityEngine.UI.Text woahText;
 	public UnityEngine.UI.Text adiosText;
+	public UnityEngine.UI.Text controlsText;
 	public GameObject woahButton;
 	public GameObject adiosButton;
 	public GuiController guiController;
@@ -77,6 +78,16 @@ public class LevelController : MonoBehaviour
 	public void ShowWinText()
 	{
 		StartCoroutine(guiController.FadeTextToFullAlpha(1f, winText));
+	}
+
+	public void HideControlsText()
+	{
+		StartCoroutine(guiController.FadeTextToZeroAlpha(1f, controlsText));
+	}
+
+	public void ShowControlsText()
+	{
+		StartCoroutine(guiController.FadeTextToFullAlpha(1f, controlsText));
 	}
 
 

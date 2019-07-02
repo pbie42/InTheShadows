@@ -66,6 +66,7 @@ public class LevelSelection : MonoBehaviour
 	private void SelectLevel(string level)
 	{
 		clueText.text = _clues[level];
+		levelController.currentLevel = null;
 		levelController.currentLevel = _levels[level];
 		StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 0f));
 		StartCoroutine(guiController.FadeTextToFullAlpha(_fadeInSpeed, clueText));
@@ -80,21 +81,25 @@ public class LevelSelection : MonoBehaviour
 		{
 			_topLights["Level 1"].intensity = 0;
 			_spotLights["Level 1"].intensity = 0;
+			_levels["Level 1"].SetActive(false);
 		}
 		if (level != "Level 2")
 		{
 			_topLights["Level 2"].intensity = 0;
 			_spotLights["Level 2"].intensity = 0;
+			_levels["Level 2"].SetActive(false);
 		}
 		if (level != "Level 3")
 		{
 			_topLights["Level 3"].intensity = 0;
 			_spotLights["Level 3"].intensity = 0;
+			_levels["Level 3"].SetActive(false);
 		}
 		if (level != "Level 4")
 		{
 			_topLights["Level 4"].intensity = 0;
 			_spotLights["Level 4"].intensity = 0;
+			_levels["Level 4"].SetActive(false);
 		}
 	}
 
@@ -126,6 +131,7 @@ public class LevelSelection : MonoBehaviour
 	{
 		levelController.HideWoahText();
 		levelController.HideWinText();
+		levelController.HideControlsText();
 		levelController.HideAdiosButton();
 		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 1f));
 		StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
@@ -138,6 +144,7 @@ public class LevelSelection : MonoBehaviour
 	{
 		levelController.HideWoahText();
 		levelController.HideWinText();
+		levelController.HideControlsText();
 		levelController.HideAdiosButton();
 		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 1f));
 		StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
@@ -155,6 +162,7 @@ public class LevelSelection : MonoBehaviour
 	{
 		mainCamera.currentView = 2;
 		levelController.ShowWoahText("← Woah There");
+		levelController.ShowControlsText();
 		StartCoroutine(guiController.FadeAndHideButton(giddyupText, giddyUpButton));
 		StartCoroutine(guiController.FadeAndHideButton(adiosText, adiosButton));
 	}
@@ -171,12 +179,15 @@ public class LevelSelection : MonoBehaviour
 
 	public void PuzzleSolved(string levelFinished)
 	{
-		if (levelFinished == "Teapot")
-			_unlockedLevels["Level 2"] = true;
-		if (levelFinished == "Elephant")
-			_unlockedLevels["Level 3"] = true;
-		if (levelFinished == "Globe")
-			_unlockedLevels["Level 4"] = true;
+		if (!_testMode)
+		{
+			if (levelFinished == "Teapot")
+				_unlockedLevels["Level 2"] = true;
+			if (levelFinished == "Elephant")
+				_unlockedLevels["Level 3"] = true;
+			if (levelFinished == "Globe")
+				_unlockedLevels["Level 4"] = true;
+		}
 	}
 
 	private void FinishedLevelAnimation()

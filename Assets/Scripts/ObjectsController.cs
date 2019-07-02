@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class ObjectsController : MonoBehaviour
 {
-	public bool canHorizontal;
-	public bool canVertical;
-	public bool canMove;
 	private bool _solved = false;
-	public int colliderPoints;
-	public LevelSelection levelSelection;
-	public LevelController levelController;
-	public GameObject piece1;
-	public GameObject piece2;
+	private float distance = 4.0f;
 	private GameObject _currentPiece;
 	private int _collidersHit = 0;
-	Vector3 _mPrevPos = Vector3.zero;
+	public bool canHorizontal;
+	public bool canMove;
+	public bool canVertical;
+	public GameObject controlsMenu;
+	public GameObject piece1;
+	public GameObject piece2;
+	public int colliderPoints;
+	public LevelController levelController;
+	public LevelSelection levelSelection;
+	public UnityEngine.UI.Text controlsText;
 	Vector3 _mPosDelta = Vector3.zero;
-	Vector3 _parentUp;
+	Vector3 _mPrevPos = Vector3.zero;
 	Vector3 _parentRight;
-	private float distance = 4.0f;
+	Vector3 _parentUp;
 
 	private void Start()
 	{
@@ -71,8 +73,27 @@ public class ObjectsController : MonoBehaviour
 			_mPosDelta = Input.mousePosition - _mPrevPos;
 			_currentPiece.transform.Rotate(_parentUp, -Vector3.Dot(_mPosDelta, _parentRight), Space.World);
 		}
+		if (Input.GetKey(KeyCode.Tab))
+		{
+			SetInstructions();
+			controlsMenu.SetActive(true);
+		}
+		else
+			controlsMenu.SetActive(false);
 
 		_mPrevPos = Input.mousePosition;
+	}
+
+	private void SetInstructions()
+	{
+		if (piece2.name == "Teapot")
+			controlsText.text = "Left mouse click and move to rotate horizontally.";
+		if (piece2.name == "Elephant")
+			controlsText.text = "Hold down CTRL while moving to rotate vertically.";
+		if (piece2.name == "Globe")
+			controlsText.text = "Click on the object you want to move.\n Previous controls apply.";
+		if (piece2.name == "42")
+			controlsText.text = "Previous controls apply. Hold shift while moving to move object up and down.";
 	}
 
 	public void colliderHit()
