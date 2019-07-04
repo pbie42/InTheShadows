@@ -24,6 +24,7 @@ public class LevelSelection : MonoBehaviour
 	public GameObject[] levelsArray;
 	public GameObject[] levelsBottlesArray;
 	public GameObject[] finishedLevelsArray;
+	public GameState gameState;
 	public GuiController guiController;
 	public LevelController levelController;
 	public UnityEngine.Light[] spotLightsArray;
@@ -38,6 +39,13 @@ public class LevelSelection : MonoBehaviour
 	void Start()
 	{
 		SetupLevelSelection();
+		// SaveSystem.DeleteSaves();
+		bool loaded = gameState.LoadGame();
+		if (loaded)
+			Debug.Log("Loaded!");
+		else
+			Debug.Log("Not Loaded!");
+
 	}
 
 	// Update is called once per frame
@@ -182,13 +190,25 @@ public class LevelSelection : MonoBehaviour
 		if (!_testMode)
 		{
 			if (levelFinished == "Teapot")
+			{
 				_unlockedLevels["Level 2"] = true;
+				gameState.unlockedLevel2 = true;
+			}
 			if (levelFinished == "Elephant")
+			{
 				_unlockedLevels["Level 3"] = true;
+				gameState.unlockedLevel3 = true;
+			}
 			if (levelFinished == "Globe")
+			{
 				_unlockedLevels["Level 4"] = true;
+				gameState.unlockedLevel4 = true;
+			}
 			if (levelFinished == "42")
+			{
 				_unlockedLevels["Level 5"] = true;
+				gameState.unlockedLevel5 = true;
+			}
 		}
 	}
 

@@ -1681,6 +1681,10 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 227273487}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &227485816 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100002, guid: 1bef3bf36a05d4a7ba23de67ef93c515, type: 3}
+  m_PrefabInternal: {fileID: 403257256}
 --- !u!4 &240527014 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000011401001550, guid: 24ca497e7d0e3174886a521b0176c8a7,
@@ -1932,6 +1936,7 @@ MonoBehaviour:
   - {fileID: 1886161562}
   - {fileID: 1890860373}
   - {fileID: 665584976}
+  gameState: {fileID: 740190762}
   guiController: {fileID: 584845727}
   levelController: {fileID: 1969781884}
   spotLightsArray:
@@ -2454,6 +2459,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 250748349}
         m_MethodName: BackToLevelSection
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 740190762}
+        m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3293,6 +3309,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b3eaa042a32a5d46a5b7a1a20aa15e3, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &446457920 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100002, guid: 099eee383c86e4f62b04e8702aefa1c0, type: 3}
+  m_PrefabInternal: {fileID: 358411276}
 --- !u!4 &456727281 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 0c999e60abda4fa4581e06517d80049a, type: 3}
@@ -5036,6 +5056,59 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &740190761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 740190763}
+  - component: {fileID: 740190762}
+  m_Layer: 0
+  m_Name: GameState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &740190762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 740190761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 151f87e8985604f27b9b9392e04bbf0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unlockedLevel1: 0
+  unlockedLevel2: 0
+  unlockedLevel3: 0
+  unlockedLevel4: 0
+  unlockedLevel5: 0
+  elephant: {fileID: 1294709571}
+  fourContainer: {fileID: 446457920}
+  fourPiece: {fileID: 476393258}
+  globe: {fileID: 242205322}
+  stand: {fileID: 1505193306}
+  teapot: {fileID: 1891599347}
+  twoContainer: {fileID: 227485816}
+  twoPiece: {fileID: 1447312898}
+--- !u!4 &740190763
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 740190761}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &740531795
 GameObject:
   m_ObjectHideFlags: 0
