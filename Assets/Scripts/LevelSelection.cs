@@ -42,7 +42,10 @@ public class LevelSelection : MonoBehaviour
 		// SaveSystem.DeleteSaves();
 		bool loaded = gameState.LoadGame();
 		if (loaded)
+		{
 			Debug.Log("Loaded!");
+			HandleGameLoad();
+		}
 		else
 			Debug.Log("Not Loaded!");
 
@@ -151,7 +154,7 @@ public class LevelSelection : MonoBehaviour
 		if (!giddyUpButton.activeSelf)
 			StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
 		if (!_testMode && (_unlockedLevels["Level 2"] || _unlockedLevels["Level 3"] || _unlockedLevels["Level 4"]))
-			FinishedLevelAnimation();
+			FinishedLevelAnimation(true);
 	}
 
 	public void BackToLevelSection()
@@ -212,22 +215,23 @@ public class LevelSelection : MonoBehaviour
 		}
 	}
 
-	private void FinishedLevelAnimation()
+	private void FinishedLevelAnimation(bool playSound)
 	{
 		if (_unlockedLevels["Level 2"] && !_finishedLevels["Level 1"].activeSelf)
-			StartCoroutine(FinishedAnimation("Level 1"));
+			StartCoroutine(FinishedAnimation("Level 1", playSound));
 		if (_unlockedLevels["Level 3"] && !_finishedLevels["Level 2"].activeSelf)
-			StartCoroutine(FinishedAnimation("Level 2"));
+			StartCoroutine(FinishedAnimation("Level 2", playSound));
 		if (_unlockedLevels["Level 4"] && !_finishedLevels["Level 3"].activeSelf)
-			StartCoroutine(FinishedAnimation("Level 3"));
+			StartCoroutine(FinishedAnimation("Level 3", playSound));
 		if (_unlockedLevels["Level 5"] && !_finishedLevels["Level 4"].activeSelf)
-			StartCoroutine(FinishedAnimation("Level 4"));
+			StartCoroutine(FinishedAnimation("Level 4", playSound));
 	}
 
-	IEnumerator FinishedAnimation(string level)
+	IEnumerator FinishedAnimation(string level, bool playSound)
 	{
 		yield return new WaitForSeconds(_gunShotSpeed);
-		bgMusic.PlayGunAndBottle();
+		if (playSound)
+			bgMusic.PlayGunAndBottle();
 		yield return new WaitForSeconds(_bottleBreakSpeed);
 		_levelsBottles[level].GetComponent<Renderer>().enabled = false;
 		_finishedLevels[level].SetActive(true);
@@ -269,6 +273,16 @@ public class LevelSelection : MonoBehaviour
 		clueText.text = _howdyText;
 		StartCoroutine(guiController.FadeTextToFullAlpha(_fadeInSpeed, clueText));
 		StartCoroutine(guiController.ButtonFadeIns(normalText, testText));
+	}
+
+	private void HandleGameLoad()
+	{
+		_unlockedLevels["Level 1"] = gameState.unlockedLevel1;
+		_unlockedLevels["Level 2"] = gameState.unlockedLevel2;
+		_unlockedLevels["Level 3"] = gameState.unlockedLevel3;
+		_unlockedLevels["Level 4"] = gameState.unlockedLevel4;
+		_unlockedLevels["Level 5"] = gameState.unlockedLevel5;
+		FinishedLevelAnimation(false);
 	}
 }
 
