@@ -9,6 +9,14 @@ public class GameState : MonoBehaviour
 	[HideInInspector] public bool unlockedLevel3 = false;
 	[HideInInspector] public bool unlockedLevel4 = false;
 	[HideInInspector] public bool unlockedLevel5 = false;
+	[HideInInspector] public Quaternion rotStartElephant;
+	[HideInInspector] public Quaternion rotStartFour;
+	[HideInInspector] public Quaternion rotStartGlobe;
+	[HideInInspector] public Quaternion rotStartStand;
+	[HideInInspector] public Quaternion rotStartTeapot;
+	[HideInInspector] public Quaternion rotStartTwo;
+	[HideInInspector] public Vector3 posStartFour;
+	[HideInInspector] public Vector3 posStartTwo;
 	public GameObject elephant;
 	public GameObject fourContainer;
 	public GameObject fourPiece;
@@ -17,6 +25,35 @@ public class GameState : MonoBehaviour
 	public GameObject teapot;
 	public GameObject twoContainer;
 	public GameObject twoPiece;
+
+	private void Start()
+	{
+		SetPositionsAndRotations();
+	}
+
+	public void SetPositionsAndRotations()
+	{
+		posStartFour = fourContainer.transform.position;
+		posStartTwo = twoContainer.transform.position;
+		rotStartElephant = elephant.transform.rotation;
+		rotStartFour = fourPiece.transform.rotation;
+		rotStartGlobe = globe.transform.rotation;
+		rotStartStand = stand.transform.rotation;
+		rotStartTeapot = teapot.transform.rotation;
+		rotStartTwo = twoPiece.transform.rotation;
+	}
+
+	public void NormalModeSetup()
+	{
+		teapot.transform.rotation = rotStartTeapot;
+		elephant.transform.rotation = rotStartElephant;
+		globe.transform.rotation = rotStartGlobe;
+		stand.transform.rotation = rotStartStand;
+		fourPiece.transform.rotation = rotStartFour;
+		fourContainer.transform.position = posStartFour;
+		twoContainer.transform.position = posStartTwo;
+		twoPiece.transform.rotation = rotStartTwo;
+	}
 
 	public void SaveGame()
 	{
@@ -28,7 +65,7 @@ public class GameState : MonoBehaviour
 		GameData data = SaveSystem.LoadGame();
 		if (data == null)
 			return false;
-		unlockedLevel1 = data.unlockedLevel1;
+		unlockedLevel1 = true;
 		unlockedLevel2 = data.unlockedLevel2;
 		unlockedLevel3 = data.unlockedLevel3;
 		unlockedLevel4 = data.unlockedLevel4;
@@ -41,6 +78,7 @@ public class GameState : MonoBehaviour
 		fourContainer.transform.position = new Vector3(data.posFour[0], data.posFour[1], data.posFour[2]);
 		twoPiece.transform.localEulerAngles = new Vector3(data.rotTwo[0], data.rotTwo[1], data.rotTwo[2]);
 		twoContainer.transform.position = new Vector3(data.posTwo[0], data.posTwo[1], data.posTwo[2]);
+		SetPositionsAndRotations();
 		return true;
 	}
 }

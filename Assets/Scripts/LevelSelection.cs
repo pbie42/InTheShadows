@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelSelection : MonoBehaviour
 {
-	private bool _testMode = false;
+	[HideInInspector] public bool testMode = false;
 	private Dictionary<string, GameObject> _levels = new Dictionary<string, GameObject>();
 	private Dictionary<string, bool> _unlockedLevels = new Dictionary<string, bool>();
 	private Dictionary<string, GameObject> _levelsBottles = new Dictionary<string, GameObject>();
@@ -65,13 +65,13 @@ public class LevelSelection : MonoBehaviour
 		if (Physics.Raycast(ray, out hit, 1000))
 		{
 			string name = hit.collider.gameObject.name;
-			if (name == "Level 1" && (_unlockedLevels["Level 1"] || _testMode))
+			if (name == "Level 1" && (_unlockedLevels["Level 1"] || testMode))
 				SelectLevel("Level 1");
-			else if (name == "Level 2" && (_unlockedLevels["Level 2"] || _testMode))
+			else if (name == "Level 2" && (_unlockedLevels["Level 2"] || testMode))
 				SelectLevel("Level 2");
-			else if (name == "Level 3" && (_unlockedLevels["Level 3"] || _testMode))
+			else if (name == "Level 3" && (_unlockedLevels["Level 3"] || testMode))
 				SelectLevel("Level 3");
-			else if (name == "Level 4" && (_unlockedLevels["Level 4"] || _testMode))
+			else if (name == "Level 4" && (_unlockedLevels["Level 4"] || testMode))
 				SelectLevel("Level 4");
 		}
 	}
@@ -83,7 +83,7 @@ public class LevelSelection : MonoBehaviour
 		levelController.currentLevel = _levels[level];
 		if (!giddyUpButton.activeSelf)
 			StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 0f));
-		if (clueText.color.a <= 0)
+		if (clueText.color.a <= 0 && mainCamera.currentView == 1)
 			StartCoroutine(guiController.FadeTextToFullAlpha(_fadeInSpeed, clueText));
 		guiController.StopRoutines();
 		TurnOffOthers(level);
@@ -128,7 +128,8 @@ public class LevelSelection : MonoBehaviour
 
 	public void NormalGame()
 	{
-		_testMode = false;
+		testMode = false;
+		gameState.NormalModeSetup();
 		StartCoroutine(guiController.FadeTextToFullAlpha(1.5f, clueText));
 		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 2f));
 		mainCamera.currentView = 1;
@@ -136,7 +137,7 @@ public class LevelSelection : MonoBehaviour
 
 	public void TestGame()
 	{
-		_testMode = true;
+		testMode = true;
 		StartCoroutine(guiController.FadeTextToFullAlpha(1.5f, clueText));
 		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 2f));
 		mainCamera.currentView = 1;
@@ -153,7 +154,7 @@ public class LevelSelection : MonoBehaviour
 			StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 1f));
 		if (!giddyUpButton.activeSelf)
 			StartCoroutine(guiController.FadeAndDisplayButton(giddyupText, giddyUpButton, 1f));
-		if (!_testMode && (_unlockedLevels["Level 2"] || _unlockedLevels["Level 3"] || _unlockedLevels["Level 4"]))
+		if (!testMode && (_unlockedLevels["Level 2"] || _unlockedLevels["Level 3"] || _unlockedLevels["Level 4"]))
 			FinishedLevelAnimation(true);
 	}
 
@@ -190,7 +191,7 @@ public class LevelSelection : MonoBehaviour
 
 	public void PuzzleSolved(string levelFinished)
 	{
-		if (!_testMode)
+		if (!testMode)
 		{
 			if (levelFinished == "Teapot")
 			{
@@ -249,6 +250,15 @@ public class LevelSelection : MonoBehaviour
 			SelectLevel("Level 4");
 	}
 
+	public void SaveGame()
+	{
+		if (!testMode)
+		{
+			gameState.SetPositionsAndRotations();
+			gameState.SaveGame();
+		}
+	}
+
 	private void SetupLevelSelection()
 	{
 		for (int i = 0; i < levelsArray.Length; i++)
@@ -271,7 +281,6 @@ public class LevelSelection : MonoBehaviour
 		_clues.Add("Level 3", "Give me a spin and I'll take you anywhere");
 		_clues.Add("Level 4", "The answer to life, the universe, and everything");
 		clueText.text = _howdyText;
-		StartCoroutine(guiController.FadeTextToFullAlpha(_fadeInSpeed, clueText));
 		StartCoroutine(guiController.ButtonFadeIns(normalText, testText));
 	}
 

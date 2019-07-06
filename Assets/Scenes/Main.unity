@@ -2468,7 +2468,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 740190762}
+      - m_Target: {fileID: 250748349}
         m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
@@ -5088,6 +5088,14 @@ MonoBehaviour:
   unlockedLevel3: 0
   unlockedLevel4: 0
   unlockedLevel5: 0
+  rotStartElephant: {x: 0, y: 0, z: 0, w: 0}
+  rotStartFour: {x: 0, y: 0, z: 0, w: 0}
+  rotStartGlobe: {x: 0, y: 0, z: 0, w: 0}
+  rotStartStand: {x: 0, y: 0, z: 0, w: 0}
+  rotStartTeapot: {x: 0, y: 0, z: 0, w: 0}
+  rotStartTwo: {x: 0, y: 0, z: 0, w: 0}
+  posStartFour: {x: 0, y: 0, z: 0}
+  posStartTwo: {x: 0, y: 0, z: 0}
   elephant: {fileID: 1294709571}
   fourContainer: {fileID: 446457920}
   fourPiece: {fileID: 476393258}
@@ -8451,6 +8459,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 250748349}
         m_MethodName: BackToStartFromLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 250748349}
+        m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

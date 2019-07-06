@@ -79,4 +79,13 @@ public class ObjectController : MonoBehaviour
 		if (_collidersHit > 0)
 			_collidersHit--;
 	}
+
+	private void OnDisable()
+	{
+		if (levelSelection.testMode)
+		{
+			_solved = false;
+			_collidersHit = 0;
+		}
+	}
 }
