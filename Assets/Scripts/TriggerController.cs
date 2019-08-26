@@ -29,7 +29,7 @@ public class TriggerController : MonoBehaviour
 
 	private IEnumerator ValidateShadow()
 	{
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(0.5f);
 		theObject.colliderHit();
 	}
 }

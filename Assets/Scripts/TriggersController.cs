@@ -12,6 +12,9 @@ public class TriggersController : MonoBehaviour
 	{
 		if (GameObject.ReferenceEquals(desiredCollider, other.gameObject))
 		{
+			Debug.Log("desiredCollider.name: " + desiredCollider.name);
+			Debug.Log("other.gameObject.name: " + other.gameObject.name);
+			Debug.Log("\n");
 			_validCoroutine = ValidateShadow();
 			StartCoroutine(_validCoroutine);
 		}
@@ -21,6 +24,9 @@ public class TriggersController : MonoBehaviour
 	{
 		if (GameObject.ReferenceEquals(desiredCollider, other.gameObject))
 		{
+			Debug.Log("LEAVING desiredCollider.name: " + desiredCollider.name);
+			Debug.Log("LEAVING other.gameObject.name: " + other.gameObject.name);
+			Debug.Log("\n");
 			StopCoroutine(_validCoroutine);
 			theObjectsController.colliderExited();
 		}
@@ -28,7 +34,7 @@ public class TriggersController : MonoBehaviour
 
 	private IEnumerator ValidateShadow()
 	{
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(0f);
 		theObjectsController.colliderHit();
 	}
 }

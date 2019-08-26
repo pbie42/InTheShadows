@@ -39,7 +39,7 @@ public class LevelSelection : MonoBehaviour
 	void Start()
 	{
 		SetupLevelSelection();
-		// SaveSystem.DeleteSaves();
+		SaveSystem.DeleteSaves();
 		bool loaded = gameState.LoadGame();
 		if (loaded)
 		{

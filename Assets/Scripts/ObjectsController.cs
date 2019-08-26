@@ -98,13 +98,19 @@ public class ObjectsController : MonoBehaviour
 
 	public void colliderHit()
 	{
+		Debug.Log("collider hit");
 		_collidersHit++;
+		Debug.Log("_collidersHit: " + _collidersHit);
 	}
 
 	public void colliderExited()
 	{
+		Debug.Log("collider exited");
 		if (_collidersHit > 0)
+		{
 			_collidersHit--;
+			Debug.Log("_collidersHit: " + _collidersHit);
+		}
 	}
 
 	private void OnDisable()
