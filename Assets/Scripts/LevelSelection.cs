@@ -58,6 +58,11 @@ public class LevelSelection : MonoBehaviour
 			LocatePosition();
 	}
 
+	private void OnApplicationQuit()
+	{
+		gameState.SaveGame();
+	}
+
 	private void LocatePosition()
 	{
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
