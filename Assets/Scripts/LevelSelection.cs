@@ -34,12 +34,13 @@ public class LevelSelection : MonoBehaviour
 	public UnityEngine.UI.Text giddyupText;
 	public UnityEngine.UI.Text normalText;
 	public UnityEngine.UI.Text testText;
+	public UnityEngine.UI.Text quitText;
 
 	// Use this for initialization
 	void Start()
 	{
 		SetupLevelSelection();
-		SaveSystem.DeleteSaves();
+		// SaveSystem.DeleteSaves();
 		bool loaded = gameState.LoadGame();
 		if (loaded)
 		{
@@ -146,6 +147,12 @@ public class LevelSelection : MonoBehaviour
 		StartCoroutine(guiController.FadeTextToFullAlpha(1.5f, clueText));
 		StartCoroutine(guiController.FadeAndDisplayButton(adiosText, adiosButton, 2f));
 		mainCamera.currentView = 1;
+	}
+
+	public void QuitGame()
+	{
+		SaveGame();
+		Application.Quit();
 	}
 
 	public void PrepareLevelSection()
@@ -286,7 +293,7 @@ public class LevelSelection : MonoBehaviour
 		_clues.Add("Level 3", "Give me a spin and I'll take you anywhere");
 		_clues.Add("Level 4", "The answer to life, the universe, and everything");
 		clueText.text = _howdyText;
-		StartCoroutine(guiController.ButtonFadeIns(normalText, testText));
+		StartCoroutine(guiController.ButtonFadeIns(normalText, testText, quitText));
 	}
 
 	private void HandleGameLoad()

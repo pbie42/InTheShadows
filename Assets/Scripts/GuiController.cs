@@ -93,10 +93,11 @@ public class GuiController : MonoBehaviour
 			StopCoroutine(_spotCoroutine);
 	}
 
-	public IEnumerator ButtonFadeIns(UnityEngine.UI.Text button1, UnityEngine.UI.Text button2)
+	public IEnumerator ButtonFadeIns(UnityEngine.UI.Text button1, UnityEngine.UI.Text button2, UnityEngine.UI.Text button3)
 	{
 		yield return new WaitForSeconds(2);
 		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, button1));
 		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, button2));
+		StartCoroutine(FadeTextToFullAlpha(_fadeInSpeed, button3));
 	}
 }
